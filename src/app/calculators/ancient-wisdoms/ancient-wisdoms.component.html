@@ -1,0 +1,32 @@
+<h1 class="mt-5">Ancient Wisdoms</h1>
+
+<div class="form-group row">
+    <div class="offset-3 col-3" style="vertical-align: bottom">
+        <label class="form-check-label">
+            <input class="form-check-input" type="checkbox" [(ngModel)]="hideMaxed" (ngModelChange)="updateHideMaxed($event)" />
+            Hide Maxed Skills?
+        </label>
+    </div>
+    <div class="col-3">
+        <label class="form-label">Desired: {{desiredValueRange}}%</label>
+        <input type="range" min="0" max="100" [(ngModel)]="desiredValueRange" (ngModelChange)="updateRangeCookie($event)" class="form-control-range">
+    </div>
+</div>
+
+<div *ngFor="let ancientWisdom of activeAncientWisdoms" class="form-group row">
+    <div class="col-3">
+        <label class="form-label">{{ancientWisdom.name}}</label>
+    </div>
+    <div class="col-3">
+        <input type="number" class="form-control" (ngModelChange)="ancientWisdom.updateAncientWisdom('current', $event); updateHideMaxed()" [(ngModel)]="ancientWisdom.currentValue" />
+        <span class="badge badge-pill badge-secondary">{{ancientWisdom.formatBonus(ancientWisdom.currentValue)}}</span>
+    </div>
+    <div class="col-3">
+        <input type="number" class="form-control" (ngModelChange)="ancientWisdom.updateAncientWisdom('desired', $event); updateHideMaxed()" [(ngModel)]="ancientWisdom.desiredValue" />
+        <span class="badge badge-pill badge-secondary text-right">{{ancientWisdom.formatBonus(ancientWisdom.desiredValue)}}</span>
+    </div>
+    <div class="col-3">
+        <input class="form-control" type="text" placeholder="Readonly input here…" value="{{ancientWisdom.calculateCost() | number}}" readonly>
+        
+    </div>
+</div>
