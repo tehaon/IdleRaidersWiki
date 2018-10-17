@@ -131,8 +131,6 @@ export class AncientWisdomsComponent implements OnInit {
                     if (aw.name === upgradeName) {
                         aw.currentValue = decodedUpgradeData.unlockCount;
                         aw.updateAncientWisdom('current', aw.currentValue);
-                    } else {
-                        console.log(aw);
                     }
                 });
             });
