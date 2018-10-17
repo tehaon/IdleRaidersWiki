@@ -25,6 +25,9 @@ import { PermanentUpgradeArcaneWisdom } from '../models/permanentUpgradeArcaneWi
 import { PermanentUpgradeBasicHealing } from '../models/permanentUpgradeBasicHealing.model';
 
 import { CookieService } from 'ngx-cookie-service';
+import { SaveGameDecoder } from '../saveGameDecoder';
+import { SaveGameData } from '../models/saveGameData.model';
+import { PermanentUpgradeIdData } from '../enums/permanentUpgradeIdData.enum';
 
 @Component({
     selector: 'app-ancient-wisdoms',
@@ -37,6 +40,7 @@ export class AncientWisdomsComponent implements OnInit {
     activeAncientWisdoms: AncientWisdom[] = [];
     desiredValueRange: number;
     hideMaxed: boolean;
+    saveGame: string;
 
     constructor(private cookieService: CookieService) { }
 
@@ -80,19 +84,23 @@ export class AncientWisdomsComponent implements OnInit {
         this.updateHideMaxed(this.hideMaxed);
     }
 
-    updateRangeCookie(val) {
-        this.cookieService.set('desiredValueRange', val);
+    updateRangeCookie(val = -1) {
+        if (val !== -1) {
+            this.cookieService.set('desiredValueRange', val.toString());
+        }
 
-        if (val > 0) {
+        const currentRange = parseInt(this.cookieService.get('desiredValueRange'), 0);
+
+        if (currentRange > 0) {
             this.ancientWisdoms.forEach(aw => {
-                aw.desiredValue = Math.floor(aw.currentValue * (1 + val / 100));
+                aw.desiredValue = Math.floor(aw.currentValue * (1 + currentRange / 100));
                 aw.updateAncientWisdom('desired', aw.desiredValue);
             });
         }
     }
 
-    updateHideMaxed(val) {
-        if (val !== undefined) {
+    updateHideMaxed(val = null) {
+        if (val !== null) {
             this.cookieService.set('hideMaxed', val);
         }
 
@@ -107,5 +115,48 @@ export class AncientWisdomsComponent implements OnInit {
         } else {
             this.activeAncientWisdoms = this.ancientWisdoms;
         }
+    }
+
+    fileChanged(e) {
+        const fileReader = new FileReader();
+        fileReader.onload = () => {
+            const decodedGameString = JSON.parse(this.decodeSavegameString(fileReader.result));
+            const decodedPermanentUpgrades = JSON.parse(decodedGameString.s_permanentUpgradeSystem);
+
+            decodedPermanentUpgrades.s_unlockedUpgrades.forEach(upgrade => {
+                const decodedUpgradeData = JSON.parse(upgrade.s_data);
+                const upgradeName = PermanentUpgradeIdData[upgrade.s_id];
+
+                this.ancientWisdoms.forEach(aw => {
+                    if (aw.name === upgradeName) {
+                        aw.currentValue = decodedUpgradeData.unlockCount;
+                        aw.updateAncientWisdom('current', aw.currentValue);
+                    } else {
+                        console.log(aw);
+                    }
+                });
+            });
+
+            this.updateRangeCookie();
+            this.updateHideMaxed();
+            this.saveGame = '';
+        };
+
+        fileReader.readAsText(e.target.files[0]);
+    }
+
+    private decodeSavegameString(a) {
+        if (typeof a !== 'string' || 'null' === a) {
+            return null;
+        }
+
+        a = atob(a);
+        let gameString: Uint8Array;
+        for (let b = new Uint8Array(a.length), c = 0; c < a.length; ++c) {
+            b[c] = a.charCodeAt(c);
+            gameString = b;
+        }
+
+        return new SaveGameDecoder().decompressFromUint8Array(gameString);
     }
 }

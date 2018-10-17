@@ -11,6 +11,10 @@
         <label class="form-label">Desired: {{desiredValueRange}}%</label>
         <input type="range" min="0" max="100" [(ngModel)]="desiredValueRange" (ngModelChange)="updateRangeCookie($event)" class="form-control-range">
     </div>
+    <div class="col-3">
+            <label id="lbl">Import SaveGame </label>
+            <input type='file' [(ngModel)]="saveGame" (change)="fileChanged($event)" />
+    </div>
 </div>
 
 <div *ngFor="let ancientWisdom of activeAncientWisdoms" class="form-group row">
