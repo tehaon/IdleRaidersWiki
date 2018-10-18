@@ -1,22 +1,20 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { AncientWisdomsComponent } from './ancient-wisdoms/ancient-wisdoms.component';
+import { SearchComponent } from './search/search.component';
 import { RouterModule, Routes } from '@angular/router';
 
 const appRoutes: Routes = [
-    { path: 'calculators/ancient-wisdoms', component: AncientWisdomsComponent }
+    { path: 'gearBrowser/search', component: SearchComponent }
 ];
 
 @NgModule({
   imports: [
     CommonModule,
-    FormsModule,
     RouterModule.forRoot(
         appRoutes,
         { enableTracing: false } // <-- debugging purposes only
     )
   ],
-  declarations: [AncientWisdomsComponent]
+  declarations: [SearchComponent]
 })
-export class CalculatorsModule { }
+export class GearBrowserModule { }
