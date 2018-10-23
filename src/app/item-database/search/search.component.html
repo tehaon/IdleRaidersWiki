@@ -16,9 +16,8 @@
 <table mdbTable class="table table-sm table-striped" style="font-size: .75rem">
     <thead class="thead-dark">
         <tr>
-            <th *ngFor="let header of tableHeaders; let i = index" [mdbTableSort]="items" [sortBy]="tableHeaders[i]">
+            <th *ngFor="let header of tableHeaders; let i = index" [mdbTableSort]="items" [sortBy]="tableHeaderNames[i]">
                 {{ header }}
-                <!-- <mdb-icon icon="sort"></mdb-icon> -->
             </th>
         </tr>
     </thead>
@@ -42,7 +41,6 @@
             <td>{{calculateWairModifier(item.energyRegenerationModifier)}}</td>
             <td>{{calculateWairModifier(item.energyGainModifier)}}</td>
             <td>{{calculateWairModifier(item.cooldownModifier)}}</td>
-
         </tr>
     </tbody>
 </table>

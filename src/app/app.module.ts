@@ -10,7 +10,6 @@ import { HomeComponent } from './home/home.component';
 import { DiscordComponent } from './discord/discord.component';
 import { LinksComponent } from './links/links.component';
 
-import { AppBootstrapModule } from './app-bootstrap-module';
 import { CalculatorsModule } from './calculators/calculators.module';
 import { ItemDatabaseModule } from './item-database/item-database.module';
 
@@ -32,7 +31,6 @@ const appRoutes: Routes = [
     imports: [
         FormsModule,
         BrowserModule,
-        // AppBootstrapModule,
         CalculatorsModule,
         ItemDatabaseModule,
         MDBBootstrapModule.forRoot(),
