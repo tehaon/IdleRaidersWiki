@@ -2,19 +2,25 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SearchComponent } from './search/search.component';
 import { RouterModule, Routes } from '@angular/router';
+import { FormsModule } from '@angular/forms';
+import { SearchFilterPipe } from './pipes/search-filter.pipe';
+import { MDBBootstrapModule } from 'angular-bootstrap-md';
+
 
 const appRoutes: Routes = [
-    { path: 'gearBrowser/search', component: SearchComponent }
+    { path: 'item-database/search', component: SearchComponent }
 ];
 
 @NgModule({
   imports: [
     CommonModule,
+    FormsModule,
+    MDBBootstrapModule,
     RouterModule.forRoot(
         appRoutes,
         { enableTracing: false } // <-- debugging purposes only
     )
   ],
-  declarations: [SearchComponent]
+  declarations: [SearchComponent, SearchFilterPipe]
 })
-export class GearBrowserModule { }
+export class ItemDatabaseModule { }

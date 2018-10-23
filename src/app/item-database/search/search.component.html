@@ -1,0 +1,48 @@
+<h1 class="mt-5">Item Database</h1>
+
+<div class="form-group row">
+    <div class="col-3">
+        <label class="form-label">Current Wair</label>
+        <input type="number" [(ngModel)]="wair" class="form-control" />
+    </div>
+    <div class="offset-6 col-3">
+        <div class="md-form">
+            <input type="text" [(ngModel)]="searchFilter" class="form-control" id="search" mdbInputDirective>
+            <label for="search">Search</label>
+        </div>
+    </div>
+</div>
+
+<table mdbTable class="table table-sm table-striped" style="font-size: .75rem">
+    <thead class="thead-dark">
+        <tr>
+            <th *ngFor="let header of tableHeaders; let i = index" [mdbTableSort]="items" [sortBy]="tableHeaders[i]">
+                {{ header }}
+                <!-- <mdb-icon icon="sort"></mdb-icon> -->
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let item of items; let i = index">
+            <td>{{item.name}}</td>
+            <td>{{item.classRestriction}}</td>
+            <td>{{item.tier}}</td>
+            <td>{{item.rarity[0]}}</td>
+            <td>{{calculateWairModifier(item.attackSpeed)}}</td>
+            <td>{{calculateWairModifier(item.maxHp)}}</td>
+            <td>{{calculateWairModifier(item.damage)}}</td>
+            <td>{{calculateWairModifier(item.defenseModifier)}}</td>
+            <td>{{calculateWairModifier(item.critChance)}}</td>
+            <td>{{calculateWairModifier(item.critBonus)}}</td>
+            <td>{{calculateWairModifier(item.receiveHealingModifier)}}</td>
+            <td>{{calculateWairModifier(item.selfHealModifier)}}</td>
+            <td>{{calculateWairModifier(item.healingModifier)}}</td>
+            <td>{{calculateWairModifier(item.minEnergyPoints)}}</td>
+            <td>{{calculateWairModifier(item.maxEnergyPoints)}}</td>
+            <td>{{calculateWairModifier(item.energyRegenerationModifier)}}</td>
+            <td>{{calculateWairModifier(item.energyGainModifier)}}</td>
+            <td>{{calculateWairModifier(item.cooldownModifier)}}</td>
+
+        </tr>
+    </tbody>
+</table>
