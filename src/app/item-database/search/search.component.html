@@ -16,6 +16,7 @@
 <table mdbTable class="table table-sm table-striped" style="font-size: .75rem">
     <thead class="thead-dark">
         <tr>
+            <th>&nbsp;</th>
             <th *ngFor="let header of tableHeaders; let i = index" [mdbTableSort]="items" [sortBy]="tableHeaderNames[i]">
                 {{ header }}
             </th>
@@ -23,6 +24,7 @@
     </thead>
     <tbody>
         <tr *ngFor="let item of items; let i = index">
+            <td><span class="{{ 'sprite-' + item.textureName.toLowerCase() }}"></span></td>
             <td>{{item.name}}</td>
             <td>{{item.classRestriction}}</td>
             <td>{{item.tier}}</td>

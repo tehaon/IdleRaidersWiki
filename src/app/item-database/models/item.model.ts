@@ -3,6 +3,7 @@ export class Item {
     classRestriction: string;
     tier: number;
     rarity: string;
+    textureName: string;
     attackSpeed: number;
     damage: number;
     critChance: number;

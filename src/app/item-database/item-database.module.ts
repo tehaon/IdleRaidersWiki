@@ -6,6 +6,8 @@ import { FormsModule } from '@angular/forms';
 import { SearchFilterPipe } from './pipes/search-filter.pipe';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
 
+import { HttpClientModule } from '@angular/common/http';
+
 
 const appRoutes: Routes = [
     { path: 'item-database/search', component: SearchComponent }
@@ -16,6 +18,7 @@ const appRoutes: Routes = [
     CommonModule,
     FormsModule,
     MDBBootstrapModule,
+    HttpClientModule,
     RouterModule.forRoot(
         appRoutes,
         { enableTracing: false } // <-- debugging purposes only
