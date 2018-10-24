@@ -1,8 +1,6 @@
 import { Component, OnInit, HostListener } from '@angular/core';
 import { Item } from '../models/item.model';
 import { MdbTableService } from 'angular-bootstrap-md';
-import { NgxXml2jsonService } from 'ngx-xml2json';
-import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 
 @Component({
     selector: 'app-search',
@@ -12,12 +10,7 @@ import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http
 
 export class SearchComponent implements OnInit {
 
-    constructor(private tableService: MdbTableService, private ngxXml2jsonService: NgxXml2jsonService, private httpService: HttpClient) {
-        // const parser = new DOMParser();
-        // const xml = parser.parseFromString(this.xml, 'text/xml');
-        // const obj = this.ngxXml2jsonService.xmlToJson(xml);
-        // console.log(obj);
-    }
+    constructor(private tableService: MdbTableService) { }
 
     wair: number;
     searchFilter: string;
@@ -11016,46 +11009,6 @@ export class SearchComponent implements OnInit {
         this.tableService.setDataSource(this.items);
         this.items = this.tableService.getDataSource();
         this.previous = this.tableService.getDataSource();
-
-        this.httpService.get('/assets/sprites/atlas1.plist', {
-            headers: new HttpHeaders().set('Content-Type', 'text/xml'),
-            responseType: 'text'
-        }).subscribe(
-            data => {
-                const sprites = [];
-                const parser = new DOMParser();
-                const xml = parser.parseFromString(data, 'text/xml');
-                const obj: any = this.ngxXml2jsonService.xmlToJson(xml);
-                const spriteData = obj.plist[1].dict.dict[0];
-                //console.log(spriteData);
-                spriteData.key.forEach((sprite, i) => {
-                    sprites.push({
-                        key: sprite,
-                        data: {
-                            aliases: spriteData.dict[i].string[0],
-                            spriteOffset: spriteData.dict[i].string[1],
-                            spriteSize: spriteData.dict[i].string[2],
-                            spriteSourceSize: spriteData.dict[i].string[3],
-                        }
-                    })
-                    //console.log(sprite);
-                    //console.log(spriteData.dict[i]);
-                });
-
-                console.log(sprites);
-            },
-            (err: HttpErrorResponse) => {
-                if (err.error instanceof Error) {
-                    // A client-side or network error occurred. Handle it accordingly.
-                    console.log('An error occurred:', err.error.message);
-                } else {
-                    // The backend returned an unsuccessful response code.
-                    // The response body may contain clues as to what went wrong,
-                    console.log(`Backend returned code ${err.status}, body was: ${err.error}`);
-                    console.log(err.error);
-                }
-            }
-        );
     }
 
     calculateWairModifier(val: number) {
