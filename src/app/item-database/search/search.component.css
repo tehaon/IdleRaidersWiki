@@ -2757,3 +2757,26 @@
 .sprite-thorn { background-position: -212px -242px; width: 8px; height: 18px; }
 .sprite-bow { background-position: -133px -245px; width: 6px; height: 21px; }
 .sprite-marker { background-position: -90px -146px; width: 6px; height: 4px; }
+
+.rarity-common, .rarity-uncommon, .rarity-rare, .rarity-artifact {
+    width: 25px;
+    height: 25px;
+    display: inline-block;
+    padding: 5px 5px;
+}
+
+.rarity-common {
+    background-color: beige;    
+}
+
+.rarity-uncommon {
+    background-color: green;
+}
+
+.rarity-rare {
+    background-color: purple;
+}
+
+.rarity-artifact {
+    background-color: orange;
+}
