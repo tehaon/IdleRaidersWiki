@@ -28,7 +28,6 @@
         <div *ngFor="let raiderClass of raiderClasses">
             <h2>{{ raiderClass }}</h2>
             <div class="row" *ngFor="let raiderTier of raidertiers">
-                <!-- <div class="col"> -->
                 <div class="item-holder" dragula="items" [(dragulaModel)]="inventory">
                     <h3>{{ raiderTier }}</h3>
                     <div class="row" *ngFor="let item of (inventory | classItems:raiderClass | itemTier:raiderTier)">
@@ -44,7 +43,6 @@
                         </div>
                     </div>
                 </div>
-                <!-- </div> -->
             </div>
         </div>
     </div>

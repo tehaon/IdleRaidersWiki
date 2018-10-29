@@ -10954,6 +10954,29 @@ export class ItemsService {
     constructor() { }
 
     getEquippedItems() {
-        return this.items;
+        const items = this.items
+            .sort((a, b) => {
+                const rarityDifference = this.getNumericRarity(a.rarity) - this.getNumericRarity(b.rarity);
+
+                if (rarityDifference === 0) {
+                    if (a.name > b.name) {
+                        return rarityDifference + 1;
+                    } else {
+                        return rarityDifference - 1;
+                    }
+                }
+
+                return rarityDifference;
+            });
+        return items;
+    }
+
+    getNumericRarity(rarity: string): number {
+        switch (rarity) {
+            case 'Common': return 0;
+            case 'Uncommon': return 1;
+            case 'Rare': return 2;
+            case 'Artifact': return 3;
+        }
     }
 }
