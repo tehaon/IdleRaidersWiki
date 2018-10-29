@@ -26,7 +26,7 @@
         <tr *ngFor="let item of items; let i = index">
             <td><span class="{{ 'rarity-' + item.rarity.toLowerCase() }}"><span class="{{ 'sprite-' + item.textureName.toLowerCase() }}"></span></span></td>
             <td>{{item.name}}</td>
-            <td>{{item.classRestriction}}</td>
+            <td>{{item.classRestriction.substr(0, 3)}}</td>
             <td>{{item.tier}}</td>
             <td>{{calculateWairModifier(item.attackSpeed)}}</td>
             <td>{{calculateWairModifier(item.maxHp)}}</td>

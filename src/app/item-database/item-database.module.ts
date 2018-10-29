@@ -7,6 +7,8 @@ import { SearchFilterPipe } from './pipes/search-filter.pipe';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
 
 import { HttpClientModule } from '@angular/common/http';
+import { ClassItemsPipe } from './pipes/class-items.pipe';
+import { ItemTierPipe } from './pipes/item-tier.pipe';
 
 
 const appRoutes: Routes = [
@@ -24,6 +26,7 @@ const appRoutes: Routes = [
         { enableTracing: false } // <-- debugging purposes only
     )
   ],
-  declarations: [SearchComponent, SearchFilterPipe]
+  declarations: [SearchComponent, SearchFilterPipe, ClassItemsPipe, ItemTierPipe],
+  exports: [ClassItemsPipe, ItemTierPipe]
 })
 export class ItemDatabaseModule { }

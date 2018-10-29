@@ -12,6 +12,7 @@ import { LinksComponent } from './links/links.component';
 
 import { CalculatorsModule } from './calculators/calculators.module';
 import { ItemDatabaseModule } from './item-database/item-database.module';
+import { CharacterBuilderModule } from './character-builder/character-builder.module';
 
 import { CookieService } from 'ngx-cookie-service';
 
@@ -33,6 +34,7 @@ const appRoutes: Routes = [
         BrowserModule,
         CalculatorsModule,
         ItemDatabaseModule,
+        CharacterBuilderModule,
         MDBBootstrapModule.forRoot(),
         RouterModule.forRoot(
             appRoutes,

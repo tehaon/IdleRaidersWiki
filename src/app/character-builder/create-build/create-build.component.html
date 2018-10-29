@@ -1,0 +1,51 @@
+<div class="row">
+    <div class="col-5">
+        <div class="row">
+            <div class="col">Warrior</div>
+            <div class="col">
+                <div class="item-holder w-100" dragula="items" [(dragulaModel)]="items">
+                    <div class="row" *ngFor="let item of items">
+                        <div class="col-1">
+                            <span class="{{ 'rarity-' + item.rarity.toLowerCase() }}">
+                                <span class="{{ 'sprite-' + item.textureName.toLowerCase() }}">&nbsp;</span>
+                            </span>
+                        </div>
+                        <div class="col">
+                            {{ item.name }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="item-holder w-100" dragula="skills" [(dragulaModel)]="skills">
+                    <div class="item-container" *ngFor="let skill of skills">{{ skill }}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-7">
+        <div *ngFor="let raiderClass of raiderClasses">
+            <h2>{{ raiderClass }}</h2>
+            <div class="row" *ngFor="let raiderTier of raidertiers">
+                <!-- <div class="col"> -->
+                <div class="item-holder" dragula="items" [(dragulaModel)]="inventory">
+                    <h3>{{ raiderTier }}</h3>
+                    <div class="row" *ngFor="let item of (inventory | classItems:raiderClass | itemTier:raiderTier)">
+                        <div class="col-1">
+                            <span class="{{ 'rarity-' + item.rarity.toLowerCase() }}">
+                                <span class="sprite-size">
+                                    <span class="{{ 'sprite-' + item.textureName.toLowerCase() }}">&nbsp;</span>
+                                </span>
+                            </span>
+                        </div>
+                        <div class="col">
+                            {{ item.name }}
+                        </div>
+                    </div>
+                </div>
+                <!-- </div> -->
+            </div>
+        </div>
+    </div>
+</div>
