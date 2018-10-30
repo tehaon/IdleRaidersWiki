@@ -1,6 +1,6 @@
 import { Component, OnInit, HostListener } from '@angular/core';
 import { Item } from '../models/item.model';
-import { MdbTableService } from 'angular-bootstrap-md';
+import { MdbTableService } from 'ng-uikit-pro-standard';
 import { ItemsService } from '../items.service';
 
 @Component({

@@ -10971,6 +10971,29 @@ export class ItemsService {
         return items;
     }
 
+    getEquipmentForClass(raiderClass: string) {
+        const items = this.items.filter((item) => {
+            return item.classRestriction == null
+                || item.classRestriction === ''
+                || item.classRestriction.toLowerCase() === raiderClass.toLocaleLowerCase();
+        })
+            .sort((a, b) => {
+                const rarityDifference = this.getNumericRarity(a.rarity) - this.getNumericRarity(b.rarity);
+
+                if (rarityDifference === 0) {
+                    if (a.name > b.name) {
+                        return rarityDifference + 1;
+                    } else {
+                        return rarityDifference - 1;
+                    }
+                }
+
+                return rarityDifference;
+            });
+
+        return items;
+    }
+
     getNumericRarity(rarity: string): number {
         switch (rarity) {
             case 'Common': return 0;

@@ -4,7 +4,7 @@ import { SearchComponent } from './search/search.component';
 import { RouterModule, Routes } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { SearchFilterPipe } from './pipes/search-filter.pipe';
-import { MDBBootstrapModule } from 'angular-bootstrap-md';
+import { MDBBootstrapModulesPro } from 'ng-uikit-pro-standard';
 
 import { HttpClientModule } from '@angular/common/http';
 import { ClassItemsPipe } from './pipes/class-items.pipe';
@@ -19,7 +19,7 @@ const appRoutes: Routes = [
   imports: [
     CommonModule,
     FormsModule,
-    MDBBootstrapModule,
+    MDBBootstrapModulesPro,
     HttpClientModule,
     RouterModule.forRoot(
         appRoutes,

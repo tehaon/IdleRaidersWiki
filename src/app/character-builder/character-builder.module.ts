@@ -4,7 +4,7 @@ import { CreateBuildComponent } from './create-build/create-build.component';
 import { RouterModule, Routes } from '@angular/router';
 import { DragulaModule } from 'ng2-dragula';
 import { ItemDatabaseModule } from '../item-database/item-database.module';
-import { MDBBootstrapModule } from 'angular-bootstrap-md';
+import { MDBBootstrapModulesPro, MDBBootstrapModule, AccordionModule } from 'ng-uikit-pro-standard';
 
 
 const appRoutes: Routes = [
@@ -16,7 +16,7 @@ const appRoutes: Routes = [
   imports: [
     CommonModule,
     ItemDatabaseModule,
-    MDBBootstrapModule,
+    MDBBootstrapModulesPro,
     DragulaModule.forRoot(),
     RouterModule.forRoot(
         appRoutes,
