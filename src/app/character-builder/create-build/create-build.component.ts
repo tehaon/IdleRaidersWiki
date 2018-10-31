@@ -55,13 +55,11 @@ export class CreateBuildComponent implements OnInit, OnDestroy {
         this.raiderClasses.forEach((raiderClass, i) => {
             this.items[raiderClass] = [];
             this.raidersPerClass[raiderClass].forEach(c => {
-                console.log(c);
                 this.items[raiderClass][c] = [];
             });
 
             const group = this.dragulaService.createGroup(raiderClass.toLowerCase() + '-items', {
                 copy: (el, source) => {
-                    console.log(source);
                     return source.id.includes('inventory');
                 },
                 copyItem: (itm: Item) => {
@@ -70,8 +68,6 @@ export class CreateBuildComponent implements OnInit, OnDestroy {
                     return item;
                 },
                 accepts: (el, target, source, sibling) => {
-                    console.log(target);
-                    // To avoid dragging from right to left container
                     return !target.id.includes('inventory');
                 },
                 removeOnSpill: true
