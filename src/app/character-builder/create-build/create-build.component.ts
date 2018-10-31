@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { DragulaService } from 'ng2-dragula';
+import { DragulaService, Group } from 'ng2-dragula';
 import { Subscription } from 'rxjs';
 import { Item } from 'src/app/item-database/models/item.model';
 import { ItemsService } from 'src/app/item-database/items.service';
@@ -20,11 +20,16 @@ export class CreateBuildComponent implements OnInit, OnDestroy {
     };
     raidertiers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
     subs = new Subscription();
+    groups: Group[] = [];
     items = {};
     skills: string[] = [];
     inventory = {};
 
     constructor(private dragulaService: DragulaService, private itemsService: ItemsService) {
+        this.inventory['Warrior'] = this.getRaiderEquipment('Warrior');
+        this.inventory['Archer'] = this.getRaiderEquipment('Archer');
+        this.inventory['Priest'] = this.getRaiderEquipment('Priest');
+        this.inventory['Mage'] = this.getRaiderEquipment('Mage');
     }
 
     getRaiderEquipment(raiderClass: string) {
@@ -47,36 +52,32 @@ export class CreateBuildComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
-        this.inventory['Warrior'] = this.getRaiderEquipment('Warrior');
-        this.inventory['Archer'] = this.getRaiderEquipment('Archer');
-        this.inventory['Priest'] = this.getRaiderEquipment('Priest');
-        this.inventory['Mage'] = this.getRaiderEquipment('Mage');
-
-        this.dragulaService.createGroup('warrior-items', {
-            copy: (el, source) => {
-                console.log(source);
-                return source.id.includes('inventory');
-            },
-            copyItem: (i: Item) => {
-                const item = new Item();
-                Object.assign(item, i);
-                return item;
-            },
-            accepts: (el, target, source, sibling) => {
-                console.log(target);
-                // To avoid dragging from right to left container
-                return !target.id.includes('inventory');
-            },
-            removeOnSpill: true;
-        });
-
-
         this.raiderClasses.forEach((raiderClass, i) => {
             this.items[raiderClass] = [];
             this.raidersPerClass[raiderClass].forEach(c => {
                 console.log(c);
                 this.items[raiderClass][c] = [];
             });
+
+            const group = this.dragulaService.createGroup(raiderClass.toLowerCase() + '-items', {
+                copy: (el, source) => {
+                    console.log(source);
+                    return source.id.includes('inventory');
+                },
+                copyItem: (itm: Item) => {
+                    const item = new Item();
+                    Object.assign(item, itm);
+                    return item;
+                },
+                accepts: (el, target, source, sibling) => {
+                    console.log(target);
+                    // To avoid dragging from right to left container
+                    return !target.id.includes('inventory');
+                },
+                removeOnSpill: true
+            });
+
+            this.groups.push(group);
 
             this.subs.add(this.dragulaService.dropModel(raiderClass.toLowerCase() + '-items')
                 .subscribe(({ sourceModel, targetModel, item, target, source }) => {
@@ -93,13 +94,13 @@ export class CreateBuildComponent implements OnInit, OnDestroy {
                 })
             );
         });
-
-
     }
 
     ngOnDestroy() {
-        // destroy all the subscriptions at once
         this.subs.unsubscribe();
-    }
 
+        this.groups.forEach((group) => {
+            this.dragulaService.destroy(group.name);
+        });
+    }
 }
