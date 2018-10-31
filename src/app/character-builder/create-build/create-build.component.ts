@@ -52,6 +52,25 @@ export class CreateBuildComponent implements OnInit, OnDestroy {
         this.inventory['Priest'] = this.getRaiderEquipment('Priest');
         this.inventory['Mage'] = this.getRaiderEquipment('Mage');
 
+        this.dragulaService.createGroup('warrior-items', {
+            copy: (el, source) => {
+                console.log(source);
+                return source.id.includes('inventory');
+            },
+            copyItem: (i: Item) => {
+                const item = new Item();
+                Object.assign(item, i);
+                return item;
+            },
+            accepts: (el, target, source, sibling) => {
+                console.log(target);
+                // To avoid dragging from right to left container
+                return !target.id.includes('inventory');
+            },
+            removeOnSpill: true;
+        });
+
+
         this.raiderClasses.forEach((raiderClass, i) => {
             this.items[raiderClass] = [];
             this.raidersPerClass[raiderClass].forEach(c => {
@@ -60,12 +79,15 @@ export class CreateBuildComponent implements OnInit, OnDestroy {
             });
 
             this.subs.add(this.dragulaService.dropModel(raiderClass.toLowerCase() + '-items')
-                .subscribe(({ sourceModel, targetModel, item }) => {
+                .subscribe(({ sourceModel, targetModel, item, target, source }) => {
                     if (targetModel.length > 4) {
                         setTimeout(function () {
                             const index = targetModel.indexOf(item, 0);
                             const deletedItem = targetModel.splice(index, 1)[0];
-                            sourceModel.push(deletedItem);
+
+                            if (!source.id.includes('inventory')) {
+                                sourceModel.push(deletedItem);
+                            }
                         }, 100);
                     }
                 })

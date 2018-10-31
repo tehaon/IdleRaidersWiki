@@ -39,7 +39,7 @@
                             <mdb-accordion-item [collapsed]="true" *ngFor="let raiderTier of raidertiers">
                                 <mdb-accordion-item-head>Tier {{ raiderTier }}</mdb-accordion-item-head>
                                 <mdb-accordion-item-body>
-                                    <div dragula="{{ raiderClass.toLocaleLowerCase() + '-items' }}" [(dragulaModel)]="inventory[raiderClass][raiderTier]">
+                                    <div id="{{ raiderClass + '-inventory-' + raiderTier }}" dragula="{{ raiderClass.toLocaleLowerCase() + '-items' }}" [(dragulaModel)]="inventory[raiderClass][raiderTier]">
                                         <div class="row" *ngFor="let item of (inventory[raiderClass][raiderTier])">
                                             <div class="col-1">
                                                 <span class="{{ 'rarity-' + item.rarity.toLowerCase() }}">
