@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Item } from './models/item.model';
+import { Skill } from './models/skill.model';
 
 @Injectable({
     providedIn: 'root'
@@ -10949,7 +10950,1144 @@ export class ItemsService {
             selfHealModifier: null
         }
     ];
-
+    skills: Skill[] = [
+        {
+            title: 'Hitstreak',
+            description: 'After each normal attack, gives the raider a chance to attack again immediately and without cooldown',
+            lore: 'Book on martial arts from the far eastern lands. A section in this book reads: \'Often pure strength is not enough. The wise warrior fosters a quick mind and body.\'',
+            price: 300,
+            skillOptions: {
+                probability: 0.1
+            },
+            tier: -1,
+            classRestriction: [
+                'Warrior',
+                'Archer'
+            ],
+            textureName: 'skillbook'
+        },
+        {
+            title: 'Primal Rage',
+            description: 'On each attack, gives the raider a chance to gain an Enrage Buff, increasing their combat speed by 50% and increasing damage taken by all damage sources by 10%',
+            lore: '',
+            price: 500,
+            skillOptions: {
+                title: 'Primal Rage',
+                probability: 0.15,
+                value: 0.5,
+                defenseValue: 1.1,
+                buffDuration: 10,
+                texture: '#buff_enrage.png',
+                stacking: false
+            },
+            tier: 2,
+            classRestriction: 'Warrior',
+            textureName: 'primal_rage'
+        },
+        {
+            title: 'Blood Lust',
+            description: 'When Primal Rage triggers, it also applies a self-healing effect which heals the warrior for a percentage of their damage every second.',
+            lore: '',
+            price: 500,
+            skillOptions: {
+                buffDuration: 5,
+                healModifier: 2,
+                title: 'Unrelenting Assault'
+            },
+            tier: 2,
+            classRestriction: 'Warrior',
+            textureName: 'blood_lust'
+        },
+        {
+            title: 'Rallying Cry',
+            description: 'The warrior sends out a rallying cry, generating energy points (rage/focus/mana) for itself and all allies.',
+            lore: '',
+            price: 500,
+            skillOptions: {
+                cooldown: 60,
+                generatedEnergySelf: 20,
+                generatedEnergyAllies: 10
+            },
+            tier: -1,
+            classRestriction: 'Warrior',
+            textureName: 'rallying_cry'
+        },
+        {
+            title: 'Rallying Cry Level 2',
+            description: 'The warrior sends out a rallying cry, generating energy points (rage/focus/mana) for itself and all allies.',
+            lore: '',
+            price: 500,
+            skillOptions: {
+                cooldown: 60,
+                generatedEnergySelf: 40,
+                generatedEnergyAllies: 20
+            },
+            tier: -1,
+            classRestriction: 'Warrior',
+            textureName: 'rallying_cry'
+        },
+        {
+            title: 'Mighty Blow',
+            description: 'The warrior deals a mighty blow which applies damage based on the warrior\'s base damage.',
+            lore: '',
+            price: 500,
+            skillOptions: {
+                duration: 3,
+                cooldown: 15,
+                damageModifier: 10,
+                cost: 50
+            },
+            tier: -1,
+            classRestriction: 'Warrior',
+            textureName: 'mighty_blow'
+        },
+        {
+            title: 'Mighty Blow Level 2',
+            description: 'The warrior deals a mighty blow which applies damage based on the warrior\'s base damage.',
+            lore: '',
+            price: 500,
+            skillOptions: {
+                duration: 3,
+                cooldown: 15,
+                damageModifier: 12,
+                cost: 55
+            },
+            tier: 5,
+            classRestriction: 'Warrior',
+            textureName: 'mighty_blow'
+        },
+        {
+            title: 'Mighty Blow Level 3',
+            description: 'The warrior deals a mighty blow which applies damage based on the warrior\'s base damage.',
+            lore: '',
+            price: 500,
+            skillOptions: {
+                duration: 3,
+                cooldown: 15,
+                damageModifier: 15,
+                cost: 61
+            },
+            tier: -1,
+            classRestriction: 'Warrior',
+            textureName: 'mighty_blow'
+        },
+        {
+            title: 'Hail of Arrows',
+            description: 'Rains down arrows in a large area, dealing damage to all enemies on the map. All archers with this skill execute this at the same time, but they don\'t need to be on the same map to do it. Hits all enemies on farm maps, and a large radius around the target in all other maps.',
+            lore: 'The archers will only execute this ability if more than 3 creatures will be hit by it.',
+            price: 500,
+            skillOptions: {
+                cooldown: 45,
+                cost: 100,
+                damageModifier: 7,
+                radius: 150,
+                title: 'Rain of Arrows'
+            },
+            tier: -1,
+            classRestriction: 'Archer',
+            textureName: 'hail_of_arrows'
+        },
+        {
+            title: 'Bulwark',
+            description: 'The warrior temporarily becomes a living bulwark, reducing all damage taken by 75%.',
+            lore: '',
+            price: 500,
+            skillOptions: {
+                threshold: 0.2,
+                buffDuration: 10,
+                cooldown: 60,
+                value: 0.25,
+                cost: 30,
+                title: 'Bulwark',
+                soundEffect: 'res/audio/shield.wav'
+            },
+            tier: 2,
+            classRestriction: 'Warrior',
+            textureName: 'bulwark'
+        },
+        {
+            title: 'Stun Cry',
+            description: 'The raider can stun all enemies in a 80 radius, forcing them to stand still.',
+            lore: '',
+            price: 0,
+            skillOptions: {
+                cooldown: 15,
+                cost: 90,
+                range: 80,
+                stunDuration: 3
+            },
+            tier: 15,
+            classRestriction: 'Warrior',
+            textureName: 'warrior_stun'
+        },
+        {
+            title: 'Shield Block',
+            lore: '',
+            price: 300,
+            skillOptions: {
+                buffDuration: 5,
+                value: 0.9,
+                cooldown: 10,
+                cost: 25
+            },
+            tier: -1,
+            classRestriction: 'Warrior',
+            textureName: 'shieldblock'
+        },
+        {
+            title: 'Shield Block Level 2',
+            lore: '',
+            price: 300,
+            skillOptions: {
+                buffDuration: 7,
+                value: 0.85,
+                cooldown: 12,
+                cost: 27.500000000000004
+            },
+            tier: 5,
+            classRestriction: 'Warrior',
+            textureName: 'shieldblock'
+        },
+        {
+            title: 'Shield Block Level 3',
+            lore: '',
+            price: 300,
+            skillOptions: {
+                buffDuration: 7,
+                value: 0.8200000000000001,
+                cooldown: 12,
+                cost: 32.5
+            },
+            tier: -1,
+            classRestriction: 'Warrior',
+            textureName: 'shieldblock'
+        },
+        {
+            title: 'Saving Throw',
+            description: 'If a non-Warrior raider is attacked by an enemy, the warrior will throw an axe, stunning the target for 5 seconds and forcing it to attack the warrior.',
+            lore: '',
+            price: 500,
+            skillOptions: {
+                duration: 0.5,
+                stunDuration: 5,
+                cooldown: 2,
+                cost: 15,
+                range: 999999,
+                speed: 500
+            },
+            tier: -1,
+            classRestriction: 'Warrior',
+            textureName: 'saving_throw'
+        },
+        {
+            title: 'Challenging Cry',
+            description: 'The raider can challenge all enemies in a 200 radius, forcing them to attack the raider.',
+            lore: '',
+            price: 500,
+            skillOptions: {
+                cooldown: 30,
+                cost: 30,
+                radius: 200
+            },
+            tier: 2,
+            classRestriction: 'Warrior',
+            textureName: 'challenging_cry'
+        },
+        {
+            title: 'Healstreak',
+            description: 'After executing the default healing ability (Basic Heal), the raider has a chance to execute it again immediately and skip its cooldown. The additional cast will not cost any mana.',
+            lore: '',
+            price: 300,
+            skillOptions: {
+                probability: 0.1
+            },
+            tier: 1,
+            classRestriction: 'Priest',
+            textureName: 'healstreakpassive'
+        },
+        {
+            title: 'Multiple Shots',
+            description: 'After each shot, gives the archer a chance to fire two additional projectiles at randomly selected nearby targets.',
+            lore: 'This book describes a technique once used by archers of the eastern lands, which allowed them to fire multiple arrows in a single draw.',
+            price: 250,
+            skillOptions: {
+                probability: 0.3,
+                additionalProjectiles: 2
+            },
+            tier: -1,
+            classRestriction: 'Archer',
+            textureName: 'multipleprojectiles'
+        },
+        {
+            title: 'Heal Propagation',
+            description: 'Each heal cast by the raider has a chance to spread to nearby allies around the target and heal them for a percentage of the raiders healing amount.',
+            lore: '',
+            price: 300,
+            skillOptions: {
+                probability: 0.1,
+                healModifier: 0.15
+            },
+            tier: -1,
+            classRestriction: 'Priest',
+            textureName: 'skillbookhealaoepassive'
+        },
+        {
+            title: 'Cleave',
+            description: 'Each attack by the raider has a chance to cleave, dealing a percentage of the attack\'s damage to nearby enemies around the target.',
+            lore: '',
+            price: 200,
+            skillOptions: {
+                probability: 0.5,
+                radius: 50,
+                damageModifier: 1.5
+            },
+            tier: -1,
+            classRestriction: 'Warrior',
+            textureName: 'skillbookdamageaoepassive'
+        },
+        {
+            title: 'Taunt',
+            description: 'Gives the raider the ability to taunt their current target, forcing it to attack the raider.',
+            lore: '',
+            price: 200,
+            skillOptions: {
+                cooldown: 10,
+                duration: 0.1,
+                range: 100,
+                title: 'Taunt'
+            },
+            tier: -1,
+            classRestriction: 'Warrior',
+            textureName: 'skillbooktauntactive'
+        },
+        {
+            title: 'Command',
+            description: 'Allows the warrior to command all other raiders to focus its current combat target.',
+            lore: '',
+            price: 500,
+            skillOptions: {
+                cooldown: 10,
+                cost: 20,
+                title: 'Command'
+            },
+            tier: -1,
+            classRestriction: 'Warrior',
+            textureName: 'command'
+        },
+        {
+            title: 'Area of Effect Heal',
+            lore: '',
+            price: 300,
+            skillOptions: {
+                cooldown: 10,
+                duration: 1.5,
+                cost: 25,
+                radius: 200,
+                healModifier: 0.15,
+                title: 'AOE Heal'
+            },
+            tier: -1,
+            classRestriction: 'Priest',
+            textureName: 'skillbookhealaoeactive'
+        },
+        {
+            title: 'Area of Effect Heal Level 2',
+            lore: '',
+            price: 300,
+            skillOptions: {
+                cooldown: 10,
+                duration: 1.5,
+                cost: 28,
+                radius: 200,
+                healModifier: 0.25
+            },
+            tier: 5,
+            classRestriction: 'Priest',
+            textureName: 'skillbookhealaoeactive'
+        },
+        {
+            title: 'Area of Effect Heal Level 3',
+            lore: '',
+            price: 300,
+            skillOptions: {
+                cooldown: 10,
+                duration: 1.5,
+                cost: 30,
+                radius: 200,
+                healModifier: 0.4
+            },
+            tier: -1,
+            classRestriction: 'Priest',
+            textureName: 'skillbookhealaoeactive'
+        },
+        {
+            title: 'Fireball',
+            description: 'Shoots a fireball which deals a percentage of the raiders damage amount.',
+            lore: '',
+            price: 500,
+            skillOptions: {
+                duration: 2,
+                cooldown: 15,
+                damageModifier: 7,
+                cost: 40,
+                title: 'Fireball',
+                hitpoint: 1
+            },
+            tier: -1,
+            classRestriction: 'Mage',
+            textureName: 'skillbookfireballactive'
+        },
+        {
+            title: 'Fireball Level 2',
+            description: 'Shoots a fireball which deals a percentage of the raiders damage amount.',
+            lore: '',
+            price: 500,
+            skillOptions: {
+                duration: 2,
+                cooldown: 15,
+                damageModifier: 8.4,
+                cost: 44
+            },
+            tier: 5,
+            classRestriction: 'Mage',
+            textureName: 'skillbookfireballactive'
+        },
+        {
+            title: 'Magic Missiles',
+            description: 'Fires a number of magic missiles, each dealing a percentage of the caster\'s damage to the target.',
+            lore: '',
+            price: 300,
+            skillOptions: {
+                duration: 2,
+                cooldown: 10,
+                damageModifier: 1.5,
+                cost: 30,
+                projectiles: 3
+            },
+            tier: -1,
+            classRestriction: 'Mage',
+            textureName: 'Mage_skill_arcane_missile'
+        },
+        {
+            title: 'Magic Missiles Level 2',
+            description: 'Fires a number of magic missiles, each dealing a percentage of the caster\'s damage to the target.',
+            lore: '',
+            price: 300,
+            skillOptions: {
+                duration: 2,
+                cooldown: 10,
+                damageModifier: 1.7999999999999998,
+                cost: 36,
+                projectiles: 3
+            },
+            tier: 5,
+            classRestriction: 'Mage',
+            textureName: 'Mage_skill_arcane_missile'
+        },
+        {
+            title: 'Magic Missiles Level 3',
+            description: 'Fires a number of magic missiles, each dealing a percentage of the caster\'s damage to the target.',
+            lore: '',
+            price: 300,
+            skillOptions: {
+                duration: 2,
+                cooldown: 10,
+                damageModifier: 2.25,
+                cost: 42,
+                projectiles: 3
+            },
+            tier: -1,
+            classRestriction: 'Mage',
+            textureName: 'Mage_skill_arcane_missile'
+        },
+        {
+            title: 'Arcane Barrage',
+            description: 'Removes the cooldown from all of the raider\'s equipped Magic Missiles skills.',
+            lore: '',
+            price: 300,
+            skillOptions: {},
+            tier: -1,
+            classRestriction: 'Mage',
+            textureName: 'Mage_skill_arcane_orb'
+        },
+        {
+            title: 'Ignite',
+            description: 'Increases the critical hit chance of all equipped Fireball skills. Critical strikes also ignite the target, causing a debuff that deals a percentage of the raider\'s damage over time.',
+            lore: '',
+            price: 500,
+            skillOptions: {
+                damageModifier: 1,
+                buffDuration: 5,
+                critChanceImprovement: 0.08,
+                bonusCritChance: 0.08,
+                title: 'Ignite'
+            },
+            tier: 1,
+            classRestriction: 'Mage',
+            textureName: 'Mage_skill_explosion'
+        },
+        {
+            title: 'Inner Combustion',
+            description: 'After Fireball deals a critical hit, the next Fireball can be cast again immediately and will not cost any mana.',
+            lore: '',
+            price: 500,
+            skillOptions: {},
+            tier: 1,
+            classRestriction: 'Mage',
+            textureName: 'Mage_skill_fire_wave'
+        },
+        {
+            title: 'Cold Focus',
+            description: 'Each Frost Shard has a chance to trigger a buff which increases the damage of the caster for a limited amount of time.',
+            lore: '',
+            price: 500,
+            skillOptions: {
+                attribute: 'allDamageModifier',
+                damageModifier: 0.02,
+                operator: 1,
+                buffDuration: 5,
+                name: 'ColdFocus',
+                title: 'Cold Focus',
+                stacking: true,
+                renew: true,
+                isDebuff: false,
+                probability: 0.1,
+                maxStacks: 5,
+                value: 0.02
+            },
+            tier: -1,
+            classRestriction: 'Mage',
+            textureName: 'Mage_dmgbuff'
+        },
+        {
+            title: 'Cold Focus Level 2',
+            description: 'Each Frost Shard has a chance to trigger a buff which increases the damage of the caster for a limited amount of time.',
+            lore: '',
+            price: 500,
+            skillOptions: {
+                attribute: 'allDamageModifier',
+                damageModifier: 0.03,
+                operator: 1,
+                buffDuration: 5,
+                name: 'ColdFocus',
+                title: 'Cold Focus',
+                stacking: true,
+                renew: true,
+                isDebuff: false,
+                probability: 0.15000000000000002,
+                maxStacks: 5,
+                value: 0.02
+            },
+            tier: -1,
+            classRestriction: 'Mage',
+            textureName: 'Mage_dmgbuff'
+        },
+        {
+            title: 'Cold Focus Level 3',
+            description: 'Each Frost Shard has a chance to trigger a buff which increases the damage of the caster for a limited amount of time.',
+            lore: '',
+            price: 500,
+            skillOptions: {
+                attribute: 'allDamageModifier',
+                damageModifier: 0.03,
+                operator: 1,
+                buffDuration: 5,
+                name: 'ColdFocus',
+                title: 'Cold Focus',
+                stacking: true,
+                renew: true,
+                isDebuff: false,
+                probability: 0.18,
+                maxStacks: 7,
+                value: 0.02
+            },
+            tier: -1,
+            classRestriction: 'Mage',
+            textureName: 'Mage_dmgbuff'
+        },
+        {
+            title: 'Arcane Frenzy',
+            lore: '',
+            price: 300,
+            skillOptions: {
+                attribute: 'attackSpeed',
+                value: 0.02,
+                operator: 0,
+                buffDuration: 5,
+                name: 'ArcaneFrenzy',
+                title: 'Arcane Frenzy',
+                stacking: true,
+                renew: true,
+                isDebuff: false,
+                probability: 0.05,
+                maxStacks: 5
+            },
+            tier: -1,
+            classRestriction: 'Mage',
+            textureName: 'Mage_speedbuff'
+        },
+        {
+            title: 'Arcane Frenzy Level 2',
+            lore: '',
+            price: 300,
+            skillOptions: {
+                attribute: 'attackSpeed',
+                value: 0.02,
+                operator: 0,
+                buffDuration: 5,
+                name: 'ArcaneFrenzy',
+                title: 'Arcane Frenzy',
+                stacking: true,
+                renew: true,
+                isDebuff: false,
+                probability: 0.07,
+                maxStacks: 7
+            },
+            tier: -1,
+            classRestriction: 'Mage',
+            textureName: 'Mage_speedbuff'
+        },
+        {
+            title: 'Arcane Bombardment',
+            lore: '',
+            price: 300,
+            skillOptions: {
+                cost: 10,
+                bonusProjectiles: 2
+            },
+            tier: -1,
+            classRestriction: 'Mage',
+            textureName: 'Mage_skill_arcane_missile_upgrade'
+        },
+        {
+            title: 'Arcane Bombardment Level 2',
+            lore: '',
+            price: 300,
+            skillOptions: {
+                cost: 8,
+                bonusProjectiles: 2
+            },
+            tier: -1,
+            classRestriction: 'Mage',
+            textureName: 'Mage_skill_arcane_missile_upgrade'
+        },
+        {
+            title: 'Frost Shard',
+            description: 'Shoots a fast shard of ice which deals a percentage of the caster\'s damage to the target',
+            lore: '',
+            price: 500,
+            skillOptions: {
+                duration: 2,
+                cooldown: 5,
+                hitpoint: 1,
+                damageModifier: 2.1,
+                cost: 11
+            },
+            tier: -1,
+            classRestriction: 'Mage',
+            textureName: 'Mage_skill_ice_shard'
+        },
+        {
+            title: 'Frost Shard Level 2',
+            description: 'Shoots a fast shard of ice which deals a percentage of the caster\'s damage to the target',
+            lore: '',
+            price: 500,
+            skillOptions: {
+                duration: 2,
+                cooldown: 5,
+                hitpoint: 1,
+                damageModifier: 2.52,
+                cost: 12.100000000000001
+            },
+            tier: 3,
+            classRestriction: 'Mage',
+            textureName: 'Mage_skill_ice_shard'
+        },
+        {
+            title: 'Frost Shard Level 3',
+            description: 'Shoots a fast shard of ice which deals a percentage of the caster\'s damage to the target',
+            lore: '',
+            price: 500,
+            skillOptions: {
+                duration: 2,
+                cooldown: 5,
+                hitpoint: 1,
+                damageModifier: 2.94,
+                cost: 13.75
+            },
+            tier: -1,
+            classRestriction: 'Mage',
+            textureName: 'Mage_skill_ice_shard'
+        },
+        {
+            title: 'Chill',
+            description: 'Every shot of Frost Shard has a chance to chill the target, reducing its combat speed by -10% and dealing a percentage of the casters damage.',
+            lore: '',
+            price: 500,
+            skillOptions: {
+                probability: 0.15,
+                value: -0.1,
+                buffDuration: 10,
+                triggeredBy: 'FrostShardProjectile',
+                damageModifier: 5
+            },
+            tier: -1,
+            classRestriction: 'Mage',
+            textureName: 'Mage_skill_ring_of_ice'
+        },
+        {
+            title: 'Chill Level 2',
+            description: 'Every shot of Frost Shard has a chance to chill the target, reducing its combat speed by -10% and dealing a percentage of the casters damage.',
+            lore: '',
+            price: 500,
+            skillOptions: {
+                probability: 0.2,
+                value: -0.1,
+                buffDuration: 10,
+                triggeredBy: 'FrostShardProjectile',
+                damageModifier: 8
+            },
+            tier: -1,
+            classRestriction: 'Mage',
+            textureName: 'Mage_skill_ring_of_ice'
+        },
+        {
+            title: 'Chill Level 3',
+            description: 'Every shot of Frost Shard has a chance to chill the target, reducing its combat speed by -10% and dealing a percentage of the casters damage.',
+            lore: '',
+            price: 500,
+            skillOptions: {
+                probability: 0.22999999999999998,
+                value: -0.1,
+                buffDuration: 10,
+                triggeredBy: 'FrostShardProjectile',
+                damageModifier: 10
+            },
+            tier: -1,
+            classRestriction: 'Mage',
+            textureName: 'Mage_skill_ring_of_ice'
+        },
+        {
+            title: 'Protective Shield',
+            description: 'Envelops a target raider in a protective shield, reducing incoming damage by -25%',
+            lore: '',
+            price: 5000,
+            skillOptions: {
+                buffValue: -0.25,
+                buffDuration: 15,
+                cost: 8,
+                cooldown: 45
+            },
+            tier: -1,
+            classRestriction: 'Priest',
+            textureName: 'skillbookprotectiveshield'
+        },
+        {
+            title: 'Sacred Rite',
+            description: 'Passive ability. Each time the priest heals a target with less than 30% HP, the passive will heal the target again for 100% of the original heal amount',
+            lore: '',
+            price: 5000,
+            skillOptions: {
+                healModifier: 1,
+                threshold: 0.3
+            },
+            tier: 5,
+            classRestriction: 'Priest',
+            textureName: 'healing_circle'
+        },
+        {
+            title: 'Divine Intervention',
+            description: 'When Sacred Rite triggers, it also restores 20% of the caster\'s current mana and causes the next executed ability to cost no mana',
+            lore: '',
+            price: 5000,
+            skillOptions: {
+                amount: 0.2
+            },
+            tier: 5,
+            classRestriction: 'Priest',
+            textureName: 'sacred_ritual'
+        },
+        {
+            title: 'Focused Shot',
+            description: '\'Focused Shot\' ability. The archer can use this ability to fire a powerful arrow at the target, dealing a large multiple of the archer\'s damage to the target.',
+            lore: '',
+            price: 5000,
+            skillOptions: {
+                duration: 2,
+                cooldown: 8,
+                damageModifier: 6,
+                cost: 100
+            },
+            tier: 1,
+            classRestriction: 'Archer',
+            textureName: 'skillbookfocusedshot'
+        },
+        {
+            title: 'Focused Shot Level 2',
+            description: '\'Focused Shot\' ability. The archer can use this ability to fire a powerful arrow at the target, dealing a large multiple of the archer\'s damage to the target.',
+            lore: '',
+            price: 5000,
+            skillOptions: {
+                duration: 2,
+                cooldown: 8,
+                damageModifier: 8,
+                cost: 100
+            },
+            tier: 5,
+            classRestriction: 'Archer',
+            textureName: 'skillbookfocusedshot'
+        },
+        {
+            title: 'Focused Shot Level 3',
+            description: '\'Focused Shot\' ability. The archer can use this ability to fire a powerful arrow at the target, dealing a large multiple of the archer\'s damage to the target.',
+            lore: '',
+            price: 5000,
+            skillOptions: {
+                duration: 2,
+                cooldown: 8,
+                damageModifier: 10,
+                cost: 100
+            },
+            tier: -1,
+            classRestriction: 'Archer',
+            textureName: 'skillbookfocusedshot'
+        },
+        {
+            title: 'Quick Shot',
+            description: '\'Quick Shot\' ability. The archer can use this ability to fire an almost instant arrow that deals a percentage of the archer\'s base damage.',
+            lore: '',
+            price: 300,
+            skillOptions: {
+                duration: 0.3,
+                cooldown: 4,
+                damageModifier: 3,
+                cost: 45,
+                speedModifier: 1
+            },
+            tier: -1,
+            classRestriction: 'Archer',
+            textureName: 'skillbookquickshot'
+        },
+        {
+            title: 'Charming Shot',
+            description: 'Charms an enemy, making it fight with the raiders instead of against them.',
+            lore: '',
+            price: 150,
+            skillOptions: {
+                cooldown: 30,
+                cost: 50,
+                buffDuration: 15
+            },
+            tier: -1,
+            classRestriction: 'Archer',
+            textureName: 'charming_shot'
+        },
+        {
+            title: 'Mark Enemy',
+            description: 'Marks an enemy, increasing all damage they take by 10%.',
+            lore: '',
+            price: 500,
+            skillOptions: {
+                cooldown: 30,
+                cost: 60,
+                speedModifier: 1,
+                value: 0.1,
+                buffDuration: 15
+            },
+            tier: -1,
+            classRestriction: 'Archer',
+            textureName: 'mark_enemy'
+        },
+        {
+            title: 'Mark Enemy Level 2',
+            description: 'Marks an enemy, increasing all damage they take by 10%.',
+            lore: '',
+            price: 500,
+            skillOptions: {
+                cooldown: 20,
+                cost: 60,
+                speedModifier: 1,
+                value: 0.1,
+                buffDuration: 15
+            },
+            tier: -1,
+            classRestriction: 'Archer',
+            textureName: 'mark_enemy'
+        },
+        {
+            title: 'Time Pressure',
+            description: 'Passive ability that has a chance on each attack to advance the cooldown of all active abilities of the raider by 1 seconds',
+            lore: '',
+            price: 5000,
+            skillOptions: {
+                probability: 0.2,
+                value: 1,
+                title: 'Time Pressure'
+            },
+            tier: -1,
+            classRestriction: 'Archer',
+            textureName: 'andrenalin'
+        },
+        {
+            title: 'Prayer',
+            description: 'When the priest\'s mana falls below 10% mana, they can engage in a prayer, regenerating all mana over 5 seconds.',
+            lore: '',
+            price: 5000,
+            skillOptions: {
+                duration: 5,
+                cooldown: 60,
+                threshold: 0.1,
+                title: 'Prayer',
+                regeneratePerTick: 0.2,
+                texture: '#buff_manareg.png'
+            },
+            tier: -1,
+            classRestriction: 'Priest',
+            textureName: 'mighty_prayer'
+        },
+        {
+            title: 'Flash Heal',
+            description: 'Almost instant healing ability which heals the target for a percentage of the priest\'s base healing amount.',
+            lore: '',
+            price: 500,
+            skillOptions: {
+                cooldown: 4,
+                duration: 0.4,
+                cost: 13,
+                healModifier: 1,
+                title: 'Flash Heal'
+            },
+            tier: -1,
+            classRestriction: 'Priest',
+            textureName: 'holy_spark'
+        },
+        {
+            title: 'Flash Heal Level 2',
+            description: 'Almost instant healing ability which heals the target for a percentage of the priest\'s base healing amount.',
+            lore: '',
+            price: 500,
+            skillOptions: {
+                cooldown: 4,
+                duration: 0.4,
+                cost: 15,
+                healModifier: 1.2
+            },
+            tier: -1,
+            classRestriction: 'Priest',
+            textureName: 'holy_spark'
+        },
+        {
+            title: 'Flash Heal Level 3',
+            description: 'Almost instant healing ability which heals the target for a percentage of the priest\'s base healing amount.',
+            lore: '',
+            price: 500,
+            skillOptions: {
+                cooldown: 4,
+                duration: 0.4,
+                cost: 19,
+                healModifier: 1.5
+            },
+            tier: -1,
+            classRestriction: 'Priest',
+            textureName: 'holy_spark'
+        },
+        {
+            title: 'War Cry',
+            description: '\'War Cry\' ability. An active ability that increases the damage of allies by 5% for a certain amount of time.',
+            lore: '',
+            price: 500,
+            skillOptions: {
+                buffDuration: 30,
+                cooldown: 60,
+                value: 0.05,
+                cost: 50
+            },
+            tier: -1,
+            classRestriction: 'Warrior',
+            textureName: 'war_cry'
+        },
+        {
+            title: 'War Cry Level 2',
+            description: '\'War Cry\' ability. An active ability that increases the damage of allies by 5% for a certain amount of time.',
+            lore: '',
+            price: 500,
+            skillOptions: {
+                buffDuration: 30,
+                cooldown: 50,
+                value: 0.05,
+                cost: 40
+            },
+            tier: -1,
+            classRestriction: 'Warrior',
+            textureName: 'war_cry'
+        },
+        {
+            title: 'War Cry Level 3',
+            description: '\'War Cry\' ability. An active ability that increases the damage of allies by 5% for a certain amount of time.',
+            lore: '',
+            price: 500,
+            skillOptions: {
+                buffDuration: 30,
+                cooldown: 40,
+                value: 0.05,
+                cost: 40
+            },
+            tier: -1,
+            classRestriction: 'Warrior',
+            textureName: 'war_cry'
+        },
+        {
+            title: 'Calming Shot',
+            description: 'Gives the raider the ability to remove all running buffs from its current target, and deals a percentage of the Archer\'s damage.',
+            lore: '',
+            price: 500,
+            skillOptions: {
+                duration: 0.5,
+                cooldown: 30,
+                multiplier: 3
+            },
+            tier: 2,
+            classRestriction: 'Archer',
+            textureName: 'calming_shot'
+        },
+        {
+            title: 'Cleanse',
+            description: 'The priest cleanses all running debuffs from an ally.',
+            lore: '',
+            price: 500,
+            skillOptions: {
+                cooldown: 0,
+                cost: 4
+            },
+            tier: -1,
+            classRestriction: 'Priest',
+            textureName: 'cleanse'
+        },
+        {
+            title: 'Crippling Shot',
+            description: 'The archer cripples the target, reducing its combat speed by 10 %.',
+            lore: '',
+            price: 1000,
+            skillOptions: {
+                cooldown: 30,
+                cost: 30,
+                buffDuration: 10,
+                buffValue: 0.9
+            },
+            tier: -1,
+            classRestriction: 'Archer',
+            textureName: 'crippling_shot'
+        },
+        {
+            title: 'Disarm',
+            description: 'The warrior disarms the target, reducing all damage it deals by 10 %.',
+            lore: '',
+            price: 500,
+            skillOptions: {
+                cooldown: 20,
+                cost: 30,
+                buffDuration: 10,
+                buffValue: 0.9
+            },
+            tier: -1,
+            classRestriction: 'Warrior',
+            textureName: 'disarm'
+        },
+        {
+            title: 'Rejuvenation',
+            description: 'Applies a heal over time to the target, healing it for a percentage of the priest\'s total damage and healing amount each second.',
+            lore: '',
+            price: 500,
+            skillOptions: {
+                cooldown: 15,
+                cost: 15,
+                buffDuration: 10,
+                healModifier: 0.15
+            },
+            tier: 1,
+            classRestriction: 'Priest',
+            textureName: 'Rejuvenation'
+        },
+        {
+            title: 'Rejuvenation Level 2',
+            description: 'Applies a heal over time to the target, healing it for a percentage of the priest\'s total damage and healing amount each second.',
+            lore: '',
+            price: 500,
+            skillOptions: {
+                cooldown: 15,
+                cost: 17,
+                buffDuration: 11,
+                healModifier: 0.2
+            },
+            tier: 5,
+            classRestriction: 'Priest',
+            textureName: 'Rejuvenation'
+        },
+        {
+            title: 'Rejuvenation Level 3',
+            description: 'Applies a heal over time to the target, healing it for a percentage of the priest\'s total damage and healing amount each second.',
+            lore: '',
+            price: 500,
+            skillOptions: {
+                cooldown: 15,
+                cost: 20,
+                buffDuration: 12,
+                healModifier: 0.25
+            },
+            tier: -1,
+            classRestriction: 'Priest',
+            textureName: 'Rejuvenation'
+        },
+        {
+            title: 'Earth Shaker',
+            description: 'The ground below enemies in a radius of 40 around the target begins to tremble, slowing its combat speed by -10 %.',
+            lore: '',
+            price: 500,
+            skillOptions: {
+                cooldown: 30,
+                duration: 1,
+                cost: 40,
+                buffDuration: 15,
+                buffValue: -0.1,
+                radius: 40
+            },
+            tier: -1,
+            classRestriction: 'Warrior',
+            textureName: 'earthshaker'
+        },
+        {
+            title: 'Life Steal Missiles',
+            description: 'Provides the priest with the ability to steal life from the target which is used to heal an ally.',
+            lore: '',
+            price: 0,
+            skillOptions: {
+                duration: 2,
+                cooldown: 20,
+                hitpoint: 1,
+                damageModifier: 1,
+                projectileSpeed: 150,
+                cost: 50,
+                healModifier: 0.5
+            },
+            tier: -1,
+            classRestriction: 'Priest',
+            textureName: 'Priest_skill_trade_life'
+        },
+        {
+            title: 'Great Heal',
+            description: '',
+            lore: '',
+            price: 5000,
+            skillOptions: {
+                cost: 30,
+                cooldown: 15,
+                healModifier: 6
+            },
+            tier: -1,
+            classRestriction: 'Priest',
+            textureName: 'skillbookgreatheal'
+        }
+    ];
 
     constructor() { }
 
@@ -10972,26 +12110,31 @@ export class ItemsService {
     }
 
     getEquipmentForClass(raiderClass: string) {
-        const items = this.items.filter((item) => {
+        return this.items.filter((item) => {
             return item.classRestriction == null
                 || item.classRestriction === ''
                 || item.classRestriction.toLowerCase() === raiderClass.toLocaleLowerCase();
-        })
-            .sort((a, b) => {
-                const rarityDifference = this.getNumericRarity(a.rarity) - this.getNumericRarity(b.rarity);
+        }).sort((a, b) => {
+            const rarityDifference = this.getNumericRarity(a.rarity) - this.getNumericRarity(b.rarity);
 
-                if (rarityDifference === 0) {
-                    if (a.name > b.name) {
-                        return rarityDifference + 1;
-                    } else {
-                        return rarityDifference - 1;
-                    }
+            if (rarityDifference === 0) {
+                if (a.name > b.name) {
+                    return rarityDifference + 1;
+                } else {
+                    return rarityDifference - 1;
                 }
+            }
 
-                return rarityDifference;
-            });
+            return rarityDifference;
+        });
+    }
 
-        return items;
+    getSkillsForClass(raiderClass: string) {
+        return this.skills.filter((skill) => {
+            return skill.classRestriction == null
+                || skill.classRestriction === ''
+                || skill.classRestriction.toString().toLowerCase() === raiderClass.toLocaleLowerCase();
+        });
     }
 
     getNumericRarity(rarity: string): number {

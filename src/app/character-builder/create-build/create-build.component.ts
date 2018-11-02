@@ -22,7 +22,7 @@ export class CreateBuildComponent implements OnInit, OnDestroy {
     subs = new Subscription();
     groups: Group[] = [];
     items = {};
-    skills: string[] = [];
+    skills = {};
     inventory = {};
 
     constructor(private dragulaService: DragulaService, private itemsService: ItemsService) {
@@ -34,7 +34,9 @@ export class CreateBuildComponent implements OnInit, OnDestroy {
 
     getRaiderEquipment(raiderClass: string) {
         const allItems = this.itemsService.getEquipmentForClass(raiderClass);
-        const itemsBytier = {};
+        const itemsBytier = {
+            skills: this.itemsService.getSkillsForClass(raiderClass)
+        };
 
         this.raidertiers.forEach((tier) => {
             if (itemsBytier[tier] === undefined) {
@@ -56,6 +58,11 @@ export class CreateBuildComponent implements OnInit, OnDestroy {
             this.items[raiderClass] = [];
             this.raidersPerClass[raiderClass].forEach(c => {
                 this.items[raiderClass][c] = [];
+            });
+
+            this.skills[raiderClass] = [];
+            this.raidersPerClass[raiderClass].forEach(c => {
+                this.skills[raiderClass][c] = [];
             });
 
             const group = this.dragulaService.createGroup(raiderClass.toLowerCase() + '-items', {
@@ -80,6 +87,29 @@ export class CreateBuildComponent implements OnInit, OnDestroy {
             });
 
             this.groups.push(group);
+
+            const skillGroup = this.dragulaService.createGroup(raiderClass.toLowerCase() + '-skills', {
+                copy: (el, source) => {
+                    return source.id.includes('inventory');
+                },
+                copyItem: (itm: Item) => {
+                    const item = new Item();
+                    Object.assign(item, itm);
+                    return item;
+                },
+                accepts: (el, target, source, sibling) => {
+                    let nodeCount = 0;
+                    for (let x = 0; x < target.children.length; x++) {
+                        if (!target.children[x].classList.contains('gu-transit')) {
+                            nodeCount++;
+                        }
+                    }
+                    return !target.id.includes('inventory') && nodeCount < 4;
+                },
+                removeOnSpill: true
+            });
+
+            this.groups.push(skillGroup);
         });
     }
 
