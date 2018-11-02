@@ -121,6 +121,10 @@ export class CreateBuildComponent implements OnInit, OnDestroy {
         });
 
         this.route.queryParams.subscribe(params => {
+            if (params['build'] === undefined) {
+                return;
+            }
+
             const build = params['build'].split('|');
 
             let count = 0;
