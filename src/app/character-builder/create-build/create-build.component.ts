@@ -120,48 +120,7 @@ export class CreateBuildComponent implements OnInit, OnDestroy {
             this.groups.push(skillGroup);
         });
 
-        this.route.queryParams.subscribe(params => {
-            if (params['build'] === undefined) {
-                return;
-            }
-
-            const build = params['build'].split('|');
-
-            let count = 0;
-
-            this.raiderClasses.forEach(raiderClass => {
-                const cnt = this.raidersPerClass[raiderClass].length;
-                for (let x = 1; x <= cnt; x++) {
-                    const raiderData: string[] = build[count].split(',');
-
-                    for (let y = 0; y < 4; y++) {
-                        const foundItems = this.allItems.filter(item => {
-                            return item.name.toLowerCase() === raiderData[y].toLowerCase();
-                        });
-
-                        if (foundItems.length > 0) {
-                            const newItem = new Item();
-                            Object.assign(newItem, foundItems[0]);
-                            this.items[raiderClass][x].push(newItem);
-                        }
-                    }
-
-                    for (let y = 4; y < 8; y++) {
-                        const foundSkills = this.allSkills.filter(skill => {
-                            return skill.title.toLowerCase() === raiderData[y].toLowerCase();
-                        });
-
-                        if (foundSkills.length > 0) {
-                            const newSkill = new Skill();
-                            Object.assign(newSkill, foundSkills[0]);
-                            this.skills[raiderClass][x].push(newSkill);
-                        }
-                    }
-
-                    count++;
-                }
-            });
-        });
+        this.importBuildFromUrl();
     }
 
     ngOnDestroy() {
@@ -204,5 +163,50 @@ export class CreateBuildComponent implements OnInit, OnDestroy {
         str = str.substr(0, str.length - 3);
 
         return window.location.origin + '/character-builder/create-build?build=' + str;
+    }
+
+    private importBuildFromUrl() {
+        this.route.queryParams.subscribe(params => {
+            if (params['build'] === undefined) {
+                return;
+            }
+
+            const build = params['build'].split('|');
+
+            let count = 0;
+
+            this.raiderClasses.forEach(raiderClass => {
+                const cnt = this.raidersPerClass[raiderClass].length;
+                for (let x = 1; x <= cnt; x++) {
+                    const raiderData: string[] = build[count].split(',');
+
+                    for (let y = 0; y < 4; y++) {
+                        const foundItems = this.allItems.filter(item => {
+                            return item.name.toLowerCase() === raiderData[y].toLowerCase();
+                        });
+
+                        if (foundItems.length > 0) {
+                            const newItem = new Item();
+                            Object.assign(newItem, foundItems[0]);
+                            this.items[raiderClass][x].push(newItem);
+                        }
+                    }
+
+                    for (let y = 4; y < 8; y++) {
+                        const foundSkills = this.allSkills.filter(skill => {
+                            return skill.title.toLowerCase() === raiderData[y].toLowerCase();
+                        });
+
+                        if (foundSkills.length > 0) {
+                            const newSkill = new Skill();
+                            Object.assign(newSkill, foundSkills[0]);
+                            this.skills[raiderClass][x].push(newSkill);
+                        }
+                    }
+
+                    count++;
+                }
+            });
+        });
     }
 }

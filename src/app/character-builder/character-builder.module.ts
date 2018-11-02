@@ -6,6 +6,7 @@ import { DragulaModule } from 'ng2-dragula';
 import { ItemDatabaseModule } from '../item-database/item-database.module';
 import { MDBBootstrapModulesPro, MDBBootstrapModule, AccordionModule } from 'ng-uikit-pro-standard';
 import { FormsModule } from '@angular/forms';
+import { ClipboardModule } from 'ngx-clipboard';
 
 
 const appRoutes: Routes = [
@@ -19,6 +20,7 @@ const appRoutes: Routes = [
     FormsModule,
     ItemDatabaseModule,
     MDBBootstrapModulesPro,
+    ClipboardModule,
     DragulaModule.forRoot(),
     RouterModule.forRoot(
         appRoutes,

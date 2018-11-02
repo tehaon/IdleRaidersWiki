@@ -1,8 +1,13 @@
 <h2 class="mt-5">Character Build Creator</h2>
 
-<input type="text" value="{{ generateBuildLink() }}" /> 
 
-<div class="row">
+<input type="text" class="form-control mt-3" value="{{ generateBuildLink() }}" #buildLink />
+<button  [ngxClipboard]="buildLink" mdbBtn type="button" color="primary" mdbWavesEffect>
+    <mdb-icon icon="clipboard" class="mr-1"></mdb-icon>Copy Build Url
+</button>
+
+
+<div class="row mt-5">
     <div class="col-6">
         <mdb-accordion [multiple]="true">
             <mdb-accordion-item [collapsed]="false" *ngFor="let raiderClass of raiderClasses">
