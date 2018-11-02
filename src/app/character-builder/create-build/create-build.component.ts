@@ -68,27 +68,18 @@ export class CreateBuildComponent implements OnInit, OnDestroy {
                     return item;
                 },
                 accepts: (el, target, source, sibling) => {
-                    return !target.id.includes('inventory');
+                    let nodeCount = 0;
+                    for (let x = 0; x < target.children.length; x++) {
+                        if (!target.children[x].classList.contains('gu-transit')) {
+                            nodeCount++;
+                        }
+                    }
+                    return !target.id.includes('inventory') && nodeCount < 4;
                 },
                 removeOnSpill: true
             });
 
             this.groups.push(group);
-
-            this.subs.add(this.dragulaService.dropModel(raiderClass.toLowerCase() + '-items')
-                .subscribe(({ sourceModel, targetModel, item, target, source }) => {
-                    if (targetModel.length > 4) {
-                        setTimeout(function () {
-                            const index = targetModel.indexOf(item, 0);
-                            const deletedItem = targetModel.splice(index, 1)[0];
-
-                            if (!source.id.includes('inventory')) {
-                                sourceModel.push(deletedItem);
-                            }
-                        }, 100);
-                    }
-                })
-            );
         });
     }
 
