@@ -26,16 +26,22 @@ export class CreateBuildComponent implements OnInit, OnDestroy {
     items = {};
     skills = {};
     inventory = {};
+    allItems: Item[] = [];
+    allSkills: Skill[] = [];
 
     constructor(private dragulaService: DragulaService, private itemsService: ItemsService, private route: ActivatedRoute) {
         this.inventory['Warrior'] = this.getRaiderEquipment('Warrior');
         this.inventory['Archer'] = this.getRaiderEquipment('Archer');
         this.inventory['Priest'] = this.getRaiderEquipment('Priest');
         this.inventory['Mage'] = this.getRaiderEquipment('Mage');
+
+        this.allItems = this.itemsService.getAllItems();
+        this.allSkills = this.itemsService.getAllSkills();
     }
 
     getRaiderEquipment(raiderClass: string) {
         const allItems = this.itemsService.getEquipmentForClass(raiderClass);
+
         const itemsBytier = {
             skills: this.itemsService.getSkillsForClass(raiderClass)
         };
@@ -112,11 +118,44 @@ export class CreateBuildComponent implements OnInit, OnDestroy {
             });
 
             this.groups.push(skillGroup);
+        });
 
+        this.route.queryParams.subscribe(params => {
+            const build = params['build'].split('|');
 
-            this.route.queryParams.subscribe(params => {
-                const build = params['build'];
-                console.log(build);
+            let count = 0;
+
+            this.raiderClasses.forEach(raiderClass => {
+                const cnt = this.raidersPerClass[raiderClass].length;
+                for (let x = 1; x <= cnt; x++) {
+                    const raiderData: string[] = build[count].split(',');
+
+                    for (let y = 0; y < 4; y++) {
+                        const foundItems = this.allItems.filter(item => {
+                            return item.name.toLowerCase() === raiderData[y].toLowerCase();
+                        });
+
+                        if (foundItems.length > 0) {
+                            const newItem = new Item();
+                            Object.assign(newItem, foundItems[0]);
+                            this.items[raiderClass][x].push(newItem);
+                        }
+                    }
+
+                    for (let y = 4; y < 8; y++) {
+                        const foundSkills = this.allSkills.filter(skill => {
+                            return skill.title.toLowerCase() === raiderData[y].toLowerCase();
+                        });
+
+                        if (foundSkills.length > 0) {
+                            const newSkill = new Skill();
+                            Object.assign(newSkill, foundSkills[0]);
+                            this.skills[raiderClass][x].push(newSkill);
+                        }
+                    }
+
+                    count++;
+                }
             });
         });
     }
@@ -158,7 +197,7 @@ export class CreateBuildComponent implements OnInit, OnDestroy {
             }
         });
 
-        str = str.substr(0, str.length - 1);
+        str = str.substr(0, str.length - 3);
 
         return window.location.origin + '/character-builder/create-build?build=' + str;
     }

@@ -12119,6 +12119,14 @@ export class ItemsService {
         return items;
     }
 
+    getAllItems() {
+        return this.items;
+    }
+
+    getAllSkills() {
+        return this.skills;
+    }
+
     getEquipmentForClass(raiderClass: string) {
         return this.items.filter((item) => {
             return item.classRestriction == null
