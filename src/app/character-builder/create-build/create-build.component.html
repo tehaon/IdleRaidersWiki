@@ -1,10 +1,9 @@
 <h2 class="mt-5">Character Build Creator</h2>
 
-<p>This page is still a work in progress...</p>
+<input type="text" value="{{ generateBuildLink() }}" /> 
 
 <div class="row">
     <div class="col-6">
-        <!-- <div *ngFor="let raiderClass of raiderClasses"> -->
         <mdb-accordion [multiple]="true">
             <mdb-accordion-item [collapsed]="false" *ngFor="let raiderClass of raiderClasses">
                 <mdb-accordion-item-head>{{ raiderClass }}(s)</mdb-accordion-item-head>
@@ -77,7 +76,7 @@
                                 </mdb-accordion-item-body>
                             </mdb-accordion-item>
 
-                            <mdb-accordion-item [collapsed]="true" *ngFor="let raiderTier of raidertiers">
+                            <mdb-accordion-item [collapsed]="true" *ngFor="let raiderTier of raiderTiers">
                                 <mdb-accordion-item-head>Tier {{ raiderTier }}</mdb-accordion-item-head>
                                 <mdb-accordion-item-body>
                                     <div id="{{ raiderClass + '-inventory-' + raiderTier }}" dragula="{{ raiderClass.toLocaleLowerCase() + '-items' }}"

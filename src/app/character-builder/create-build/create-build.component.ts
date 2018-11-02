@@ -3,6 +3,8 @@ import { DragulaService, Group } from 'ng2-dragula';
 import { Subscription } from 'rxjs';
 import { Item } from 'src/app/item-database/models/item.model';
 import { ItemsService } from 'src/app/item-database/items.service';
+import { Skill } from 'src/app/item-database/models/skill.model';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
     selector: 'app-create-build',
@@ -18,14 +20,14 @@ export class CreateBuildComponent implements OnInit, OnDestroy {
         'Priest': [1, 2, 3],
         'Mage': [1, 2]
     };
-    raidertiers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
+    raiderTiers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
     subs = new Subscription();
     groups: Group[] = [];
     items = {};
     skills = {};
     inventory = {};
 
-    constructor(private dragulaService: DragulaService, private itemsService: ItemsService) {
+    constructor(private dragulaService: DragulaService, private itemsService: ItemsService, private route: ActivatedRoute) {
         this.inventory['Warrior'] = this.getRaiderEquipment('Warrior');
         this.inventory['Archer'] = this.getRaiderEquipment('Archer');
         this.inventory['Priest'] = this.getRaiderEquipment('Priest');
@@ -38,7 +40,7 @@ export class CreateBuildComponent implements OnInit, OnDestroy {
             skills: this.itemsService.getSkillsForClass(raiderClass)
         };
 
-        this.raidertiers.forEach((tier) => {
+        this.raiderTiers.forEach((tier) => {
             if (itemsBytier[tier] === undefined) {
                 itemsBytier[tier] = [];
             }
@@ -92,8 +94,8 @@ export class CreateBuildComponent implements OnInit, OnDestroy {
                 copy: (el, source) => {
                     return source.id.includes('inventory');
                 },
-                copyItem: (itm: Item) => {
-                    const item = new Item();
+                copyItem: (itm: Skill) => {
+                    const item = new Skill();
                     Object.assign(item, itm);
                     return item;
                 },
@@ -110,6 +112,12 @@ export class CreateBuildComponent implements OnInit, OnDestroy {
             });
 
             this.groups.push(skillGroup);
+
+
+            this.route.queryParams.subscribe(params => {
+                const build = params['build'];
+                console.log(build);
+            });
         });
     }
 
@@ -119,5 +127,39 @@ export class CreateBuildComponent implements OnInit, OnDestroy {
         this.groups.forEach((group) => {
             this.dragulaService.destroy(group.name);
         });
+    }
+
+    generateBuildLink() {
+        let str = '';
+        this.raiderClasses.forEach(raiderClass => {
+            const cnt = this.raidersPerClass[raiderClass].length;
+            for (let x = 1; x <= cnt; x++) {
+                for (let y = 0; y < 4; y++) {
+                    if (this.items[raiderClass][x][y] !== undefined) {
+                        const item: Item = this.items[raiderClass][x][y];
+                        str += item.name;
+                    }
+
+                    str += ',';
+                }
+
+                for (let y = 0; y < 4; y++) {
+                    if (this.skills[raiderClass][x][y] !== undefined) {
+                        const skill: Skill = this.skills[raiderClass][x][y];
+                        str += skill.title;
+                    }
+
+                    str += ',';
+                }
+
+                str = str.substr(0, str.length - 1);
+
+                str += '%7C';
+            }
+        });
+
+        str = str.substr(0, str.length - 1);
+
+        return window.location.origin + '/character-builder/create-build?build=' + str;
     }
 }

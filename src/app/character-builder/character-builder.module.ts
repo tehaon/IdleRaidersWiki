@@ -5,6 +5,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { DragulaModule } from 'ng2-dragula';
 import { ItemDatabaseModule } from '../item-database/item-database.module';
 import { MDBBootstrapModulesPro, MDBBootstrapModule, AccordionModule } from 'ng-uikit-pro-standard';
+import { FormsModule } from '@angular/forms';
 
 
 const appRoutes: Routes = [
@@ -15,6 +16,7 @@ const appRoutes: Routes = [
 @NgModule({
   imports: [
     CommonModule,
+    FormsModule,
     ItemDatabaseModule,
     MDBBootstrapModulesPro,
     DragulaModule.forRoot(),
