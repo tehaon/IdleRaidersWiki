@@ -11122,6 +11122,7 @@ export class ItemsService {
         },
         {
             title: 'Shield Block',
+            description: 'The raider can concentrate on blocking with their shield, increasing their defense against all damage types by 10%',
             lore: '',
             price: 300,
             skillOptions: {
@@ -11136,6 +11137,7 @@ export class ItemsService {
         },
         {
             title: 'Shield Block Level 2',
+            description: 'The raider can concentrate on blocking with their shield, increasing their defense against all damage types by 15%',
             lore: '',
             price: 300,
             skillOptions: {
@@ -11150,6 +11152,7 @@ export class ItemsService {
         },
         {
             title: 'Shield Block Level 3',
+            description: 'The raider can concentrate on blocking with their shield, increasing their defense against all damage types by 18%',
             lore: '',
             price: 300,
             skillOptions: {
@@ -11276,6 +11279,7 @@ export class ItemsService {
         },
         {
             title: 'Area of Effect Heal',
+            description: 'Gives the raider the ability to cast a heal on an ally which heals all nearby allies around the target by a percentage of the healer\'s normal healing amount.',
             lore: '',
             price: 300,
             skillOptions: {
@@ -11292,6 +11296,7 @@ export class ItemsService {
         },
         {
             title: 'Area of Effect Heal Level 2',
+            description: 'Gives the raider the ability to cast a heal on an ally which heals all nearby allies around the target by a percentage of the healer\'s normal healing amount.',
             lore: '',
             price: 300,
             skillOptions: {
@@ -11307,6 +11312,7 @@ export class ItemsService {
         },
         {
             title: 'Area of Effect Heal Level 3',
+            description: 'Gives the raider the ability to cast a heal on an ally which heals all nearby allies around the target by a percentage of the healer\'s normal healing amount.',
             lore: '',
             price: 300,
             skillOptions: {
@@ -11507,6 +11513,7 @@ export class ItemsService {
         },
         {
             title: 'Arcane Frenzy',
+            description: 'Each projectile of the Magic Missile ability has a chance to trigger a buff which increases the casting speed of the caster by 2% per stack for a limited amount of time. Stacks up to 5 times.',
             lore: '',
             price: 300,
             skillOptions: {
@@ -11528,6 +11535,7 @@ export class ItemsService {
         },
         {
             title: 'Arcane Frenzy Level 2',
+            description: 'Each projectile of the Magic Missile ability has a chance to trigger a buff which increases the casting speed of the caster by 2% per stack for a limited amount of time. Stacks up to 5 times.',
             lore: '',
             price: 300,
             skillOptions: {
@@ -11549,6 +11557,7 @@ export class ItemsService {
         },
         {
             title: 'Arcane Bombardment',
+            description: 'Adds two additional projectiles to each Magic Missiles cast, and increases the mana cost of the Magic Missile cast by 10.',
             lore: '',
             price: 300,
             skillOptions: {
@@ -11561,6 +11570,7 @@ export class ItemsService {
         },
         {
             title: 'Arcane Bombardment Level 2',
+            description: 'Adds two additional projectiles to each Magic Missiles cast, and increases the mana cost of the Magic Missile cast by 8.',
             lore: '',
             price: 300,
             skillOptions: {
