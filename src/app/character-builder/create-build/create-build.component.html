@@ -2,56 +2,58 @@
 
 
 <input type="text" class="form-control mt-3" value="{{ generateBuildLink() }}" #buildLink />
-<button  [ngxClipboard]="buildLink" mdbBtn type="button" color="primary" mdbWavesEffect>
+<button [ngxClipboard]="buildLink" mdbBtn type="button" color="primary" mdbWavesEffect>
     <mdb-icon icon="clipboard" class="mr-1"></mdb-icon>Copy Build Url
 </button>
 
 
 <div class="row mt-5">
     <div class="col-6">
-        <mdb-accordion [multiple]="true">
-            <mdb-accordion-item [collapsed]="false" *ngFor="let raiderClass of raiderClasses">
-                <mdb-accordion-item-head>{{ raiderClass }}(s)</mdb-accordion-item-head>
-                <mdb-accordion-item-body>
-                    <div class="row">
-                        <div class="col">Items</div>
-                        <div class="col">Skills</div>
-                    </div>
-                    <div class="row" *ngFor="let raiderClassCount of raidersPerClass[raiderClass]">
-                        <div class="col">
-                            <div class="item-holder w-100" dragula="{{ raiderClass.toLowerCase() + '-items' }}"
-                                [(dragulaModel)]="items[raiderClass][raiderClassCount]">
-                                <div class="row" *ngFor="let item of items[raiderClass][raiderClassCount]">
-                                    <div class="col-1">
-                                        <span class="{{ 'rarity-' + item.rarity.toLowerCase() }}">
-                                            <span class="{{ 'sprite-' + item.textureName.toLowerCase() }}">&nbsp;</span>
-                                        </span>
+        <div mdbSticky>
+            <mdb-accordion [multiple]="true">
+                <mdb-accordion-item [collapsed]="false" *ngFor="let raiderClass of raiderClasses">
+                    <mdb-accordion-item-head>{{ raiderClass }}(s)</mdb-accordion-item-head>
+                    <mdb-accordion-item-body>
+                        <div class="row">
+                            <div class="col">Items</div>
+                            <div class="col">Skills</div>
+                        </div>
+                        <div class="row" *ngFor="let raiderClassCount of raidersPerClass[raiderClass]">
+                            <div class="col">
+                                <div class="item-holder w-100" dragula="{{ raiderClass.toLowerCase() + '-items' }}"
+                                    [(dragulaModel)]="items[raiderClass][raiderClassCount]">
+                                    <div class="row" *ngFor="let item of items[raiderClass][raiderClassCount]">
+                                        <div class="col-1">
+                                            <span class="{{ 'rarity-' + item.rarity.toLowerCase() }}">
+                                                <span class="{{ 'sprite-' + item.textureName.toLowerCase() }}">&nbsp;</span>
+                                            </span>
+                                        </div>
+                                        <div class="col">
+                                            {{ item.name }}
+                                        </div>
                                     </div>
-                                    <div class="col">
-                                        {{ item.name }}
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="item-holder w-100" dragula="{{ raiderClass.toLowerCase() + '-skills' }}"
+                                    [(dragulaModel)]="skills[raiderClass][raiderClassCount]">
+                                    <div class="row" *ngFor="let skill of skills[raiderClass][raiderClassCount]">
+                                        <div class="col-1">
+                                            <span class="{{ 'rarity-common' }}">
+                                                <span class="{{ 'sprite-' + skill.textureName.toLowerCase() }}">&nbsp;</span>
+                                            </span>
+                                        </div>
+                                        <div class="col">
+                                            {{ skill.title }}
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="col">
-                            <div class="item-holder w-100" dragula="{{ raiderClass.toLowerCase() + '-skills' }}"
-                                [(dragulaModel)]="skills[raiderClass][raiderClassCount]">
-                                <div class="row" *ngFor="let skill of skills[raiderClass][raiderClassCount]">
-                                    <div class="col-1">
-                                        <span class="{{ 'rarity-common' }}">
-                                            <span class="{{ 'sprite-' + skill.textureName.toLowerCase() }}">&nbsp;</span>
-                                        </span>
-                                    </div>
-                                    <div class="col">
-                                        {{ skill.title }}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </mdb-accordion-item-body>
-            </mdb-accordion-item>
-        </mdb-accordion>
+                    </mdb-accordion-item-body>
+                </mdb-accordion-item>
+            </mdb-accordion>
+        </div>
     </div>
 
     <div class="col-6">
