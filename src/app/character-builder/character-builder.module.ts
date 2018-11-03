@@ -10,7 +10,7 @@ import { ClipboardModule } from 'ngx-clipboard';
 
 
 const appRoutes: Routes = [
-    { path: 'character-builder/create-build', component: CreateBuildComponent }
+    { path: 'raider-builds/build', component: CreateBuildComponent }
 ];
 
 

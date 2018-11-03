@@ -162,23 +162,23 @@ export class CreateBuildComponent implements OnInit, OnDestroy {
 
         str = str.substr(0, str.length - 3);
 
-        return window.location.origin + '/character-builder/create-build?build=' + str;
+        return window.location.origin + '/raider-builds/build?setup=' + str;
     }
 
     private importBuildFromUrl() {
         this.route.queryParams.subscribe(params => {
-            if (params['build'] === undefined) {
+            if (params['setup'] === undefined) {
                 return;
             }
 
-            const build = params['build'].split('|');
+            const setup = params['setup'].split('|');
 
             let count = 0;
 
             this.raiderClasses.forEach(raiderClass => {
                 const cnt = this.raidersPerClass[raiderClass].length;
                 for (let x = 1; x <= cnt; x++) {
-                    const raiderData: string[] = build[count].split(',');
+                    const raiderData: string[] = setup[count].split(',');
 
                     for (let y = 0; y < 4; y++) {
                         const foundItems = this.allItems.filter(item => {
