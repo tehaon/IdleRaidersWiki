@@ -17,6 +17,9 @@ import { CookieService } from 'ngx-cookie-service';
 import { MDBBootstrapModulesPro } from 'ng-uikit-pro-standard';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { EncryptionService } from './encryption.service';
+import { AuthModule } from './auth/auth.module';
+import { GlobalsService } from './globals.service';
 
 const appRoutes: Routes = [
     { path: '', component: HomeComponent },
@@ -38,13 +41,13 @@ const appRoutes: Routes = [
         CalculatorsModule,
         ItemDatabaseModule,
         CharacterBuilderModule,
+        AuthModule,
         MDBBootstrapModulesPro.forRoot(),
         RouterModule.forRoot(
-            appRoutes,
-            { enableTracing: false } // <-- debugging purposes only
+            appRoutes
         )
     ],
-    providers: [CookieService],
+    providers: [CookieService, EncryptionService, GlobalsService],
     bootstrap: [AppComponent]
 })
 export class AppModule { }
