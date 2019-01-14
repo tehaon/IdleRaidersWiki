@@ -1,17 +1,24 @@
-<h1 class="mt-5">Ancient Wisdoms</h1>
+<h1>Ancient Wisdoms</h1>
+
+<div class="form-group row">
+    <div class="offset-3 col-3">
+        <label id="lbl">Import SaveGame </label>
+        <input type='file' [(ngModel)]="saveGame" (change)="fileChanged($event)" />
+    </div>
+    <div class="col-3">
+        <label class="form-label">Your Current AA</label>
+        <input type="number" class="form-control" [(ngModel)]="currentAncientArtifacts" (ngModelChange)="updateCurrentAA($event)" />
+    </div>
+</div>
 
 <div class="form-group row">
     <div class="offset-3 col-3" style="vertical-align: bottom">
-            <mdb-checkbox [default]="true" [(ngModel)]="hideMaxed" (ngModelChange)="updateHideMaxed($event)">Hide Maxed Skills?</mdb-checkbox>
+        <mdb-checkbox [default]="true" [(ngModel)]="hideMaxed" (ngModelChange)="updateHideMaxed($event)">Hide Maxed Skills?</mdb-checkbox>
     </div>
     <div class="col-3">
         <label class="form-label">Desired: {{desiredValueRange}}%</label>
         <input type="range" min="0" max="100" [(ngModel)]="desiredValueRange" (ngModelChange)="updateRangeCookie($event)"
             class="form-control-range">
-    </div>
-    <div class="col-3">
-        <label id="lbl">Import SaveGame </label>
-        <input type='file' [(ngModel)]="saveGame" (change)="fileChanged($event)" />
     </div>
 </div>
 
@@ -25,13 +32,20 @@
         <span class="badge badge-pill badge-secondary">{{ancientWisdom.formatBonus(ancientWisdom.currentValue)}}</span>
     </div>
     <div class="col-3">
-        <input type="number" class="form-control" (ngModelChange)="ancientWisdom.updateAncientWisdom('desired', $event); updateHideMaxed()"
-            [(ngModel)]="ancientWisdom.desiredValue" />
-        <span class="badge badge-pill badge-secondary text-right">{{ancientWisdom.formatBonus(ancientWisdom.desiredValue)}}</span>
+        <input type="number" class="form-control" (ngModelChange)="ancientWisdom.updateAncientWisdom('desired', $event); updateHideMaxed()" [(ngModel)]="ancientWisdom.desiredValue" />
+        <span class="badge badge-pill badge-secondary float-left">{{ancientWisdom.formatBonus(ancientWisdom.desiredValue)}}</span>
+        <span class="badge badge-pill badge-info float-right">Can buy {{ ancientWisdom.formattedCanBuy(currentAncientArtifacts) }}</span>
     </div>
     <div class="col-3">
-        <input class="form-control" type="text" placeholder="Readonly input here…" value="{{ancientWisdom.calculateCost() | number}}"
-            readonly>
+        <input class="form-control" type="text" placeholder="" value="{{ancientWisdom.calculateCost() | number}}" readonly>
+    </div>
+</div>
 
+<div class="form-group row">
+    <div class="offset-6 col-3">
+        <label class="form-label">Total AA Costs</label>
+    </div>
+    <div class="col-3">
+        <input [ngClass]="{aaError: calculateTotalAACost() > currentAncientArtifacts}" class="form-control" type="text" placeholder="" value="{{ calculateTotalAACost() | number }}" readonly>
     </div>
 </div>

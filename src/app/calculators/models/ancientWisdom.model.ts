@@ -57,4 +57,20 @@ export abstract class AncientWisdom implements BaseAncientWisdom {
     formatBonus(val: number) {
         return '+' + (this.calculateBonus(val) * 100).toLocaleString() + '%';
     }
+
+    formattedCanBuy(currentAA: number) {
+        let increaseCount = 0;
+        let aaCost = 0;
+
+        while (aaCost <= currentAA) {
+            const nextValue = this.currentValue + ++increaseCount;
+            if (this.maxUnlocks > -1 && nextValue > this.maxUnlocks) {
+                break;
+            }
+
+            aaCost = this.costCalculator.calculateCost(this.currentValue, nextValue);
+        }
+
+        return (increaseCount - 1).toLocaleString();
+    }
 }

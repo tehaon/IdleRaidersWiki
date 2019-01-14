@@ -6,7 +6,7 @@ export class PermanentUpgradeMonsterAncientArtifacts extends AncientWisdom {
         super();
 
         this.name = 'Forbidden Knowledge';
-        this.costCalculator = new BasicCostClaculator(100);
+        this.costCalculator = new BasicCostClaculator(1000);
         this.bonusMultiplier = 0.05;
         this.maxUnlocks = 1;
     }

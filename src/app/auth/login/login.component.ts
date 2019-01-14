@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { GlobalsService } from 'src/app/globals.service';
 import { Router } from '@angular/router';
+import { environment } from 'src/environments/environment';
 
 @Component({
     selector: 'app-login',
@@ -30,7 +31,7 @@ export class LoginComponent implements OnInit {
     login() {
         if (this.loginForm.valid) {
             const postData = this.loginForm.value;
-            this.httpClient.post('http://localhost:8000/auth/login', postData).subscribe((response: any) => {
+            this.httpClient.post(environment.baseApiUrl + '/auth/login', postData).subscribe((response: any) => {
                 this.globalsService.setUserToken(response.token);
 
                 this.router.navigate(['/']);

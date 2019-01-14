@@ -55,6 +55,23 @@
                             "extractLicenses": true,
                             "vendorChunk": false,
                             "buildOptimizer": true
+                        },
+                        "local": {
+                            "fileReplacements": [
+                                {
+                                    "replace": "src/environments/environment.ts",
+                                    "with": "src/environments/environment.dev.ts"
+                                }
+                            ],
+                            "optimization": true,
+                            "outputHashing": "all",
+                            "sourceMap": false,
+                            "extractCss": true,
+                            "namedChunks": false,
+                            "aot": true,
+                            "extractLicenses": true,
+                            "vendorChunk": false,
+                            "buildOptimizer": true
                         }
                     }
                 },
@@ -66,6 +83,9 @@
                     "configurations": {
                         "production": {
                             "browserTarget": "IdleRaidersWiki:build:production"
+                        },
+                        "local": {
+                            "browserTarget": "IdleRaidersWiki:build:local"
                         }
                     }
                 },
@@ -119,6 +139,9 @@
                     "configurations": {
                         "production": {
                             "devServerTarget": "IdleRaidersWiki:serve:production"
+                        },
+                        "local": {
+                            "devServerTarget": "IdleRaidersWiki:serve:local"
                         }
                     }
                 },

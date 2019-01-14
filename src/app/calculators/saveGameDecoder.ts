@@ -53,7 +53,8 @@ export class SaveGameDecoder {
         return c.forEach(function (a) {
             k.push(String.fromCharCode(a))
         }),
-           this.decompress(k.join(""))
+        
+        this.decompress(k.join(""))
     }
 
     compressToEncodedURIComponent(a) {

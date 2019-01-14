@@ -26,8 +26,8 @@ import { PermanentUpgradeBasicHealing } from '../models/permanentUpgradeBasicHea
 
 import { CookieService } from 'ngx-cookie-service';
 import { SaveGameDecoder } from '../saveGameDecoder';
-import { SaveGameData } from '../models/saveGameData.model';
 import { PermanentUpgradeIdData } from '../enums/permanentUpgradeIdData.enum';
+import { GlobalsService } from 'src/app/globals.service';
 
 @Component({
     selector: 'app-ancient-wisdoms',
@@ -41,8 +41,9 @@ export class AncientWisdomsComponent implements OnInit {
     desiredValueRange: number;
     hideMaxed: boolean;
     saveGame: string;
+    currentAncientArtifacts: number;
 
-    constructor(private cookieService: CookieService) { }
+    constructor(private cookieService: CookieService, private globalService: GlobalsService) { }
 
     ngOnInit() {
         this.ancientWisdoms = [
@@ -75,11 +76,9 @@ export class AncientWisdomsComponent implements OnInit {
             aw.setCookieService(this.cookieService);
         });
 
-        const desiredvalueRange = this.cookieService.get('desiredValueRange');
-        this.desiredValueRange = desiredvalueRange.length > 0 ? parseInt(desiredvalueRange, 0) : 10;
-
-        const hideMaxed = this.cookieService.get('hideMaxed');
-        this.hideMaxed = hideMaxed.length > 0 ? hideMaxed === 'true' : false;
+        this.desiredValueRange = this.globalService.getCookieAsInt('desiredValueRange', 10);
+        this.hideMaxed = this.globalService.getCookieAsBool('hideMaxed');
+        this.currentAncientArtifacts = this.globalService.getCookieAsInt('currentAncientArtifacts');
 
         this.updateHideMaxed(this.hideMaxed);
     }
@@ -96,6 +95,12 @@ export class AncientWisdomsComponent implements OnInit {
                 aw.desiredValue = Math.floor(aw.currentValue * (1 + currentRange / 100));
                 aw.updateAncientWisdom('desired', aw.desiredValue);
             });
+        }
+    }
+
+    updateCurrentAA(val = -1) {
+        if (val !== -1) {
+            this.cookieService.set('currentAncientArtifacts', val.toString());
         }
     }
 
@@ -117,6 +122,15 @@ export class AncientWisdomsComponent implements OnInit {
         }
     }
 
+    calculateTotalAACost() {
+        let totalCost = 0;
+        this.ancientWisdoms.forEach(aw => {
+            totalCost += aw.calculateCost();
+        });
+
+        return totalCost;
+    }
+
     fileChanged(e) {
         const fileReader = new FileReader();
         fileReader.onload = () => {
@@ -135,8 +149,11 @@ export class AncientWisdomsComponent implements OnInit {
                 });
             });
 
+            this.currentAncientArtifacts = decodedPermanentUpgrades.s_points;
+
             this.updateRangeCookie();
             this.updateHideMaxed();
+            this.updateCurrentAA(decodedPermanentUpgrades.s_points);
             this.saveGame = '';
         };
 

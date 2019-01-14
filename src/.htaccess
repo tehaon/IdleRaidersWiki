@@ -1,3 +1,8 @@
+#Force www:
+RewriteEngine on
+RewriteCond %{HTTP_HOST} ^ir2wiki.com [NC]
+RewriteRule ^(.*)$ http://www.ir2wiki.com/$1 [L,R=301,NC]
+
 RewriteEngine On
 # If an existing asset or directory is requested go to it as it is
 RewriteCond %{DOCUMENT_ROOT}%{REQUEST_URI} -f [OR]

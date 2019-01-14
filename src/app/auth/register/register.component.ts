@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { GlobalsService } from 'src/app/globals.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
     selector: 'app-register',
@@ -31,7 +32,7 @@ export class RegisterComponent implements OnInit {
     signUp() {
         if (this.registrationForm.valid) {
             const postData = this.registrationForm.value;
-            this.httpClient.post('http://localhost:8000/auth/register', postData).subscribe((response: any) => {
+            this.httpClient.post(environment.baseApiUrl + '/auth/register', postData).subscribe((response: any) => {
                 this.globalsService.setUserToken(response.token);
             });
         } else {
